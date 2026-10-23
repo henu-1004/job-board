@@ -1,0 +1,14 @@
+<!doctype html><html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="robots" content="noindex"><title>채용 공고 보드</title>
+<link rel="stylesheet" href="style.css"></head><body>
+<header><h1>채용 공고 보드</h1><div id="updated">불러오는 중…</div><div id="counts"></div></header>
+<div id="filters">
+<input id="q" type="search" placeholder="회사·포지션·스택 검색">
+<div class="row"><select id="grade"><option value="">전체 등급</option><option>S</option><option>A</option><option>B</option></select>
+<select id="region"><option value="">전체 지역</option></select>
+<select id="exp"><option value="">전체 경력</option></select>
+<select id="mystat"><option value="">전체 상태</option><option value="none">미분류</option></select></div>
+<label><input type="checkbox" id="ai"> 🤖 AI연동만</label>
+<label><input type="checkbox" id="hideClosed"> 마감 숨기기</label>
+</div><main id="list"></main><script src="app.js"></script></body></html>

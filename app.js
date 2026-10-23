@@ -8,21 +8,21 @@ const HOST={'saramin':'사람인','wanted':'원티드','jumpit':'점핏','jobkor
 function srcFromUrl(u){try{const h=new URL(u).hostname;for(const k in HOST)if(h.includes(k))return HOST[k]+' (링크 기준)';return h.replace(/^www\./,'')}catch(e){return ''}}
 function norm(j,i){const dl=j.deadline_now||j.deadline||'';const region=pick(j,'region','location','지역','loc','area','address');const exp=pick(j,'exp_tier','experience','경력','exp_original','exp_raw','exp_text','career');
  const d=dday(dl);return{...j,_i:i,_id:j.job_id||j.url||('i'+i),_dl:dl,_d:d,_region:region,_r1:(region.match(/^[가-힣]+/)||['미기재'])[0],_exp:exp||'미기재',
- _new:!!(j.new_today||j.new||j.new_since_1013),_ai:!!(j.ai_integration||/AI연동/.test(JSON.stringify(j.tags||j.tag||''))),_closed:(j.status&&j.status!=='open')||(d!==null&&d<0),_desc:pick(j,'한줄설명','desc','description','설명'),
+ _new:!!(j.new_today||j.new||j.new_since_1013),_ai:!!(j.ai_integration||/AI연동/.test(JSON.stringify(j.tags||j.tag||''))),_closed:(j.status&&j.status!=='open')||(d!==null&&d<0),_gone:d!==null&&d<-3,_desc:pick(j,'한줄설명','desc','description','설명'),
  _src:pick(j,'source','site','출처','platform')||srcFromUrl(j.url),_stack:pick(j,'stack','tech','skills','기술스택','스택','tags'),
  _reason:[pick(j,'reason','추천이유','추천 이유','why'),pick(j,'reason2')].filter(Boolean).join(' / '),_caution:pick(j,'caution','주의점','주의','note','notes','change'),
  _expOrig:pick(j,'exp_original','exp_raw','exp_text','experience','career'),_sal:pick(j,'salary','연봉'),_url:pick(j,'url','link','url_official','alt_url','alt')}}
-fetch('data/jobs.json?'+Date.now()).then(r=>r.json()).then(d=>{
+fetch('data/jobs.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{
  const items=Array.isArray(d)?d:d.items;jobs=items.map(norm);TOPSRC=Array.isArray(d.top5)?d.top5:null;
  $('updated').textContent='마지막 업데이트: '+(d.as_of?new Date(d.as_of).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})+' (KST)':'알 수 없음');
  const g=k=>jobs.filter(j=>j.grade===k).length;$('counts').textContent=`총 ${jobs.length}건 · S${g('S')} / A${g('A')} / B${g('B')} · 🤖 ${jobs.filter(j=>j._ai).length}`;
  [...new Set(jobs.map(j=>j._r1))].sort().forEach(r=>$('region').add(new Option(r,r)));
  [...new Set(jobs.map(j=>j._exp))].sort().forEach(r=>$('exp').add(new Option(r,r)));ST.forEach(s=>$('mystat').add(new Option(s,s)));render()})
  .catch(e=>$('list').textContent='데이터를 불러오지 못했어요: '+e);
-['q','grade','region','exp','mystat','ai','hideClosed'].forEach(id=>$(id).addEventListener('input',render));
+['q','grade','region','exp','mystat','ai'].forEach(id=>$(id).addEventListener('input',render));
 const go={S:0,A:1,B:2};
 function render(){renderTop();const q=$('q').value.trim().toLowerCase(),gr=$('grade').value,rg=$('region').value,ex=$('exp').value,ms=$('mystat').value;
- const L=jobs.filter(j=>(!gr||j.grade===gr)&&(!rg||j._r1===rg)&&(!ex||j._exp===ex)&&(!$('ai').checked||j._ai)&&(!$('hideClosed').checked||!j._closed)
+ const L=jobs.filter(j=>(!gr||j.grade===gr)&&(!rg||j._r1===rg)&&(!ex||j._exp===ex)&&(!$('ai').checked||j._ai)&&!j._gone
   &&(!ms||(ms==='none'?!saved[j._id]:saved[j._id]===ms))&&(!q||[j.company,j.title,j.role,j._stack,j._src,j._region,j._desc].join(' ').toLowerCase().includes(q)))
  .sort((a,b)=>(a._closed-b._closed)||((go[a.grade]??3)-(go[b.grade]??3))||((a._d??1e4)-(b._d??1e4)));
  $('list').innerHTML=L.length?L.map(card).join(''):'<p>조건에 맞는 공고가 없어요.</p>'}
@@ -47,7 +47,7 @@ function setS(id,s){if(saved[id]===s)delete saved[id];else saved[id]=s;localStor
 
 let TOPSRC=null,topOpen=localStorage.getItem('jobboard-top')!=='0';
 function autoWhy(j){const p=[j.grade+'급'];if(j._d!==null&&j._d<=7)p.push(j._d===0?'오늘 마감':j._d===1?'내일 마감':'D-'+j._d);if(j._new)p.push('신규');if(j._ai)p.push('AI연동');return p.join('·')}
-function topList(){const ok=j=>!j._closed&&!['탈락','패스','지원함'].includes(saved[j._id]);
+function topList(){const ok=j=>!j._closed&&!j._gone&&!['탈락','패스','지원함'].includes(saved[j._id]);
  if(TOPSRC&&TOPSRC.length){const L=[];for(const t of TOPSRC){const k=t.link||t.url||t.id;const j=jobs.find(x=>x.url===k||x._url===k||x.job_id===k||x._id===k);if(j&&ok(j)&&!L.some(y=>y.j===j))L.push({j,why:t.why||autoWhy(j)})}if(L.length)return L.slice(0,5)}
  const sc=j=>({S:30,A:20,B:10}[j.grade]||0)+(j._d!==null&&j._d>=0&&j._d<=7?10-j._d:0)+(j._new?5:0)+(j._ai?3:0);
  return jobs.filter(ok).map(j=>({j,s:sc(j)})).sort((a,b)=>b.s-a.s||((a.j._d??1e4)-(b.j._d??1e4))).slice(0,5).map(x=>({j:x.j,why:autoWhy(x.j)}))}
@@ -57,5 +57,5 @@ function renderTop(){const el=$('top5');if(!el||!jobs.length)return;const L=topL
  <div class="rm"><div class="rt"><b>${esc(j.company)}</b> ${j._ai?'🤖':''}${j._new?'📌':''}</div><div class="rp">${esc(j.title||j.role)}</div><div class="rs why">${esc(why)}</div></div>
  <a class="rl" href="${esc(j._url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗</a></div>`}).join(''):'')}
 function goTo(i){const j=jobs[i];open.add(j._id);render();let el=$('c'+i);
- if(!el){['q','grade','region','exp','mystat'].forEach(x=>$(x).value='');$('ai').checked=false;$('hideClosed').checked=false;render();el=$('c'+i)}
+ if(!el){['q','grade','region','exp','mystat'].forEach(x=>$(x).value='');$('ai').checked=false;render();el=$('c'+i)}
  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1500)}}

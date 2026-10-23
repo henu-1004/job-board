@@ -1,0 +1,55 @@
+{
+ "updated": "2026-10-23T15:19+09:00",
+ "items": [
+  {
+   "company": "스피드플로어",
+   "title": "로봇 소프트웨어 엔지니어 (Robotics Software · Backend)",
+   "url": "https://www.wanted.co.kr/wd/387747",
+   "deadline": "상시",
+   "grade": "B",
+   "note": "원티드 공고 내려감(조기마감)",
+   "closed_at": "2026-10-23",
+   "archive_reason": "원티드 공고 내려감(조기마감)"
+  },
+  {
+   "company": "KT DS",
+   "title": "SW Engineering",
+   "url": "https://www.wanted.co.kr/wd/391256",
+   "deadline": "2026-10-22",
+   "grade": "A",
+   "note": "마감/마감일 경과",
+   "closed_at": "2026-10-22",
+   "archive_reason": "마감/마감일 경과"
+  },
+  {
+   "company": "프로니스정보기술",
+   "title": "금융(은행) IT시스템 Java 백엔드 개발자",
+   "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55103104",
+   "deadline": "2026-10-22",
+   "grade": "A",
+   "note": "마감/마감일 경과",
+   "closed_at": "2026-10-22",
+   "archive_reason": "마감/마감일 경과"
+  },
+  {
+   "company": "투모어스텝스(Two More Steps)",
+   "title": "IT개발팀 풀스택 개발자 신입 채용",
+   "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55104271",
+   "deadline": "2026-10-22",
+   "grade": "B",
+   "note": "마감/마감일 경과",
+   "closed_at": "2026-10-22",
+   "archive_reason": "마감/마감일 경과"
+  },
+  {
+   "company": "파워인포텍",
+   "title": "자바(Java) · 리액트(React) 풀스택 개발자 채용",
+   "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55102163",
+   "deadline": "2026-10-22",
+   "grade": "B",
+   "note": "마감/마감일 경과",
+   "closed_at": "2026-10-22",
+   "archive_reason": "마감/마감일 경과"
+  }
+ ]
+}

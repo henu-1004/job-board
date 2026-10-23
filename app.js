@@ -21,7 +21,7 @@ fetch('data/jobs.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(
  .catch(e=>$('list').textContent='데이터를 불러오지 못했어요: '+e);
 ['q','grade','region','exp','mystat','ai'].forEach(id=>$(id).addEventListener('input',render));
 const go={S:0,A:1,B:2};
-function render(){renderTop();const q=$('q').value.trim().toLowerCase(),gr=$('grade').value,rg=$('region').value,ex=$('exp').value,ms=$('mystat').value;
+function render(){if(tab==='arch'){renderArch();return}renderTop();const q=$('q').value.trim().toLowerCase(),gr=$('grade').value,rg=$('region').value,ex=$('exp').value,ms=$('mystat').value;
  const L=jobs.filter(j=>(!gr||j.grade===gr)&&(!rg||j._r1===rg)&&(!ex||j._exp===ex)&&(!$('ai').checked||j._ai)&&!j._gone
   &&(!ms||(ms==='none'?!saved[j._id]:saved[j._id]===ms))&&(!q||[j.company,j.title,j.role,j._stack,j._src,j._region,j._desc].join(' ').toLowerCase().includes(q)))
  .sort((a,b)=>(a._closed-b._closed)||((go[a.grade]??3)-(go[b.grade]??3))||((a._d??1e4)-(b._d??1e4)));
@@ -59,3 +59,17 @@ function renderTop(){const el=$('top5');if(!el||!jobs.length)return;const L=topL
 function goTo(i){const j=jobs[i];open.add(j._id);render();let el=$('c'+i);
  if(!el){['q','grade','region','exp','mystat'].forEach(x=>$(x).value='');$('ai').checked=false;render();el=$('c'+i)}
  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1500)}}
+
+let tab='open',ARCH=null;
+function setTab(t){tab=t;$('t-open').classList.toggle('on',t==='open');$('t-arch').classList.toggle('on',t==='arch');
+ $('list').hidden=$('top5').hidden=t==='arch';$('arch').hidden=t!=='arch';['region','exp','mystat'].forEach(x=>$(x).style.display=t==='arch'?'none':'');
+ if(t==='arch'&&!ARCH){$('arch').textContent='지난 공고 불러오는 중…';fetch('data/archive.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():{items:[]}).then(d=>{ARCH=(d.items||[]).map((j,i)=>({...norm(j,i),_ca:j.closed_at||'',_ar:j.archive_reason||j.note||''}));render()}).catch(e=>$('arch').textContent='불러오기 실패: '+e)}else render()}
+$('t-open').onclick=()=>setTab('open');$('t-arch').onclick=()=>setTab('arch');
+function renderArch(){if(!ARCH)return;const q=$('q').value.trim().toLowerCase(),gr=$('grade').value;
+ const L=ARCH.filter(j=>(!gr||j.grade===gr)&&(!$('ai').checked||j._ai)&&(!q||[j.company,j.title,j.role,j._stack,j._region,j._desc,j._ar].join(' ').toLowerCase().includes(q)));
+ const G={};L.forEach(j=>{const m=String(j._dl).match(/(\d{4})-(\d{2})/)||String(j._ca).match(/(\d{4})-(\d{2})/);const k=m?`${m[1]}년 ${+m[2]}월`:'기한 미상';(G[k]=G[k]||[]).push(j)});
+ const ks=Object.keys(G).sort().reverse();
+ $('arch').innerHTML=`<p class="ainfo">지난 공고 ${L.length}건 (마감·목록 제외 공고를 계속 보관해요)</p>`+(ks.length?ks.map(k=>`<h3 class="mon">${k} <small>${G[k].length}건</small></h3>`+G[k].sort((a,b)=>String(b._dl).localeCompare(String(a._dl))).map(j=>
+ `<div class="rowc closedrow"><span class="b g-${esc(j.grade)}">${esc(j.grade||'-')}</span><div class="rm"><div class="rt"><b>${esc(j.company)}</b> ${j._ai?'🤖':''}${saved[j._id]?' '+ICON[saved[j._id]]+' '+esc(saved[j._id]):''}</div>
+ <div class="rp">${esc(j.title||j.role)}</div><div class="rs">마감 ${esc(String(j._dl||'-').slice(0,10))} · 보관 ${esc(j._ca)}${j._ar?' · '+esc(j._ar):''}</div></div>
+ <a class="rl" href="${esc(j._url)}" target="_blank" rel="noopener">↗</a></div>`).join('')).join(''):'<p>조건에 맞는 지난 공고가 없어요.</p>')}

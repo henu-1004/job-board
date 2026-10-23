@@ -1,4 +1,6 @@
-const ST=['관심','지원함','서류합격','탈락','패스'],KEY='jobboard-status';let saved=JSON.parse(localStorage.getItem(KEY)||'{}'),jobs=[];
+let tab='open',ARCH=null,TOPSRC=null;
+const QP=new URLSearchParams(location.search);let P=(QP.get('p')||localStorage.getItem('jobboard-person')||'hyunwoo').replace(/[^a-z0-9_-]/gi,'');
+const ST=['관심','지원함','서류합격','탈락','패스'],KEY=P==='hyunwoo'?'jobboard-status':'jobboard-status-'+P;let saved=JSON.parse(localStorage.getItem(KEY)||'{}'),jobs=[];
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const today=()=>{const k=new Date(Date.now()+9*36e5);return Date.UTC(k.getUTCFullYear(),k.getUTCMonth(),k.getUTCDate())};
 function dday(s){const m=String(s||'').match(/(\d{4})-(\d{2})-(\d{2})/);if(!m)return null;return Math.round((Date.UTC(+m[1],m[2]-1,+m[3])-today())/864e5)}
@@ -12,16 +14,17 @@ function norm(j,i){const dl=j.deadline_now||j.deadline||'';const region=pick(j,'
  _src:pick(j,'source','site','출처','platform')||srcFromUrl(j.url),_stack:pick(j,'stack','tech','skills','기술스택','스택','tags'),
  _reason:[pick(j,'reason','추천이유','추천 이유','why'),pick(j,'reason2')].filter(Boolean).join(' / '),_caution:pick(j,'caution','주의점','주의','note','notes','change'),
  _expOrig:pick(j,'exp_original','exp_raw','exp_text','experience','career'),_sal:pick(j,'salary','연봉'),_url:pick(j,'url','link','url_official','alt_url','alt')}}
-fetch('data/jobs.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{
- const items=Array.isArray(d)?d:d.items;jobs=items.map(norm);TOPSRC=Array.isArray(d.top5)?d.top5:null;
+fetch('data/'+P+'/jobs.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{
+ const items=(Array.isArray(d)?d:d.items)||[];jobs=items.map(norm);TOPSRC=Array.isArray(d.top5)?d.top5:null;
+ if(!jobs.length){$('updated').textContent='마지막 업데이트: -';$('counts').textContent='';$('top5').innerHTML='';$('list').innerHTML='<div class="empty">📭 아직 공고 데이터가 없어요</div>';return}
  $('updated').textContent='마지막 업데이트: '+(d.as_of?new Date(d.as_of).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})+' (KST)':'알 수 없음');
  const g=k=>jobs.filter(j=>j.grade===k).length;$('counts').textContent=`총 ${jobs.length}건 · S${g('S')} / A${g('A')} / B${g('B')} · 🤖 ${jobs.filter(j=>j._ai).length}`;
  [...new Set(jobs.map(j=>j._r1))].sort().forEach(r=>$('region').add(new Option(r,r)));
  [...new Set(jobs.map(j=>j._exp))].sort().forEach(r=>$('exp').add(new Option(r,r)));ST.forEach(s=>$('mystat').add(new Option(s,s)));render()})
- .catch(e=>$('list').textContent='데이터를 불러오지 못했어요: '+e);
+ .catch(e=>{$('list').innerHTML='<div class="empty">📭 아직 공고 데이터가 없어요</div>';$('updated').textContent='마지막 업데이트: -'});
 ['q','grade','region','exp','mystat','ai'].forEach(id=>$(id).addEventListener('input',render));
 const go={S:0,A:1,B:2};
-function render(){if(tab==='arch'){renderArch();return}renderTop();const q=$('q').value.trim().toLowerCase(),gr=$('grade').value,rg=$('region').value,ex=$('exp').value,ms=$('mystat').value;
+function render(){if(tab!=='arch'&&!jobs.length)return;if(tab==='arch'){renderArch();return}renderTop();const q=$('q').value.trim().toLowerCase(),gr=$('grade').value,rg=$('region').value,ex=$('exp').value,ms=$('mystat').value;
  const L=jobs.filter(j=>(!gr||j.grade===gr)&&(!rg||j._r1===rg)&&(!ex||j._exp===ex)&&(!$('ai').checked||j._ai)&&!j._gone
   &&(!ms||(ms==='none'?!saved[j._id]:saved[j._id]===ms))&&(!q||[j.company,j.title,j.role,j._stack,j._src,j._region,j._desc].join(' ').toLowerCase().includes(q)))
  .sort((a,b)=>(a._closed-b._closed)||((go[a.grade]??3)-(go[b.grade]??3))||((a._d??1e4)-(b._d??1e4)));
@@ -45,7 +48,7 @@ function full(j){const d=j._d;let db=d===null?esc(j._dl||'기한 미기재'):d<0
  <div class="st">${ST.map(s=>`<button class="${saved[j._id]===s?'on':''}" onclick="setS('${esc(j._id).replace(/'/g,'')}','${s}')">${s}</button>`).join('')}</div></div>`}
 function setS(id,s){if(saved[id]===s)delete saved[id];else saved[id]=s;localStorage.setItem(KEY,JSON.stringify(saved));render()}
 
-let TOPSRC=null,topOpen=localStorage.getItem('jobboard-top')!=='0';
+let topOpen=localStorage.getItem('jobboard-top')!=='0';
 function autoWhy(j){const p=[j.grade+'급'];if(j._d!==null&&j._d<=7)p.push(j._d===0?'오늘 마감':j._d===1?'내일 마감':'D-'+j._d);if(j._new)p.push('신규');if(j._ai)p.push('AI연동');return p.join('·')}
 function topList(){const ok=j=>!j._closed&&!j._gone&&!['탈락','패스','지원함'].includes(saved[j._id]);
  if(TOPSRC&&TOPSRC.length){const L=[];for(const t of TOPSRC){const k=t.link||t.url||t.id;const j=jobs.find(x=>x.url===k||x._url===k||x.job_id===k||x._id===k);if(j&&ok(j)&&!L.some(y=>y.j===j))L.push({j,why:t.why||autoWhy(j)})}if(L.length)return L.slice(0,5)}
@@ -60,10 +63,10 @@ function goTo(i){const j=jobs[i];open.add(j._id);render();let el=$('c'+i);
  if(!el){['q','grade','region','exp','mystat'].forEach(x=>$(x).value='');$('ai').checked=false;render();el=$('c'+i)}
  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1500)}}
 
-let tab='open',ARCH=null;
+
 function setTab(t){tab=t;$('t-open').classList.toggle('on',t==='open');$('t-arch').classList.toggle('on',t==='arch');
  $('list').hidden=$('top5').hidden=t==='arch';$('arch').hidden=t!=='arch';['region','exp','mystat'].forEach(x=>$(x).style.display=t==='arch'?'none':'');
- if(t==='arch'&&!ARCH){$('arch').textContent='지난 공고 불러오는 중…';fetch('data/archive.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():{items:[]}).then(d=>{ARCH=(d.items||[]).map((j,i)=>({...norm(j,i),_ca:j.closed_at||'',_ar:j.archive_reason||j.note||''}));render()}).catch(e=>$('arch').textContent='불러오기 실패: '+e)}else render()}
+ if(t==='arch'&&!ARCH){$('arch').textContent='지난 공고 불러오는 중…';fetch('data/'+P+'/archive.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():{items:[]}).then(d=>{ARCH=(d.items||[]).map((j,i)=>({...norm(j,i),_ca:j.closed_at||'',_ar:j.archive_reason||j.note||''}));render()}).catch(e=>$('arch').textContent='불러오기 실패: '+e)}else render()}
 $('t-open').onclick=()=>setTab('open');$('t-arch').onclick=()=>setTab('arch');
 function renderArch(){if(!ARCH)return;const q=$('q').value.trim().toLowerCase(),gr=$('grade').value;
  const L=ARCH.filter(j=>(!gr||j.grade===gr)&&(!$('ai').checked||j._ai)&&(!q||[j.company,j.title,j.role,j._stack,j._region,j._desc,j._ar].join(' ').toLowerCase().includes(q)));
@@ -72,4 +75,11 @@ function renderArch(){if(!ARCH)return;const q=$('q').value.trim().toLowerCase(),
  $('arch').innerHTML=`<p class="ainfo">지난 공고 ${L.length}건 (마감·목록 제외 공고를 계속 보관해요)</p>`+(ks.length?ks.map(k=>`<h3 class="mon">${k} <small>${G[k].length}건</small></h3>`+G[k].sort((a,b)=>String(b._dl).localeCompare(String(a._dl))).map(j=>
  `<div class="rowc closedrow"><span class="b g-${esc(j.grade)}">${esc(j.grade||'-')}</span><div class="rm"><div class="rt"><b>${esc(j.company)}</b> ${j._ai?'🤖':''}${saved[j._id]?' '+ICON[saved[j._id]]+' '+esc(saved[j._id]):''}</div>
  <div class="rp">${esc(j.title||j.role)}</div><div class="rs">마감 ${esc(String(j._dl||'-').slice(0,10))} · 보관 ${esc(j._ca)}${j._ar?' · '+esc(j._ar):''}</div></div>
- <a class="rl" href="${esc(j._url)}" target="_blank" rel="noopener">↗</a></div>`).join('')).join(''):'<p>조건에 맞는 지난 공고가 없어요.</p>')}
+ <a class="rl" href="${esc(j._url)}" target="_blank" rel="noopener">↗</a></div>`).join('')).join(''):(ARCH.length?'<p>조건에 맞는 지난 공고가 없어요.</p>':'<div class="empty">📭 아직 지난 공고가 없어요</div>'))}
+
+localStorage.setItem('jobboard-person',P);
+fetch('data/people.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(L=>{
+ if(!L.some(x=>x.id===P)){P='hyunwoo';localStorage.setItem('jobboard-person',P);location.search='?p=hyunwoo';return}
+ $('people').innerHTML=L.map(x=>`<button type="button" class="${x.id===P?'on':''}" aria-pressed="${x.id===P}" data-p="${esc(x.id)}">${esc(x.name)}</button>`).join('');
+ document.title=(L.find(x=>x.id===P)||{}).name+' · 채용 공고 보드'}).catch(()=>{});
+$('people').addEventListener('click',e=>{const b=e.target.closest('button[data-p]');if(!b||b.dataset.p===P)return;localStorage.setItem('jobboard-person',b.dataset.p);const u=new URL(location.href);u.searchParams.set('p',b.dataset.p);location.href=u.toString()});

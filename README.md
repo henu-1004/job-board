@@ -40,14 +40,25 @@
 ```
 매일 ~09:00 KST  채용 사이트 스캔 (사람인 · 원티드 · 점핏 · 공식 채용 페이지)
        ↓          중복 제거 · 마감 확인 · S/A/B 등급 부여
-data/jobs.json   커밋 & push  (마감·사라진 공고는 data/archive.json으로 이동, 삭제 없음)
+data/<id>/jobs.json   커밋 & push  (마감·사라진 공고는 data/<id>/archive.json으로 이동, 삭제 없음)
        ↓
 GitHub Pages     정적 사이트 자동 배포 (빌드 단계 없음)
 ```
 
+## 👥 여러 사람 보드
+
+상단 이름 버튼으로 사람을 전환합니다 (선택은 기억되며 `?p=hyojeong`처럼 URL로도 지정 가능). 지원 상태도 사람별로 따로 저장돼요.
+
+**사람 추가 방법**
+1. `data/people.json`에 `{"id":"newid","name":"이름"}` 추가 (id는 영문 소문자·숫자)
+2. `data/newid/jobs.json` (`{"as_of":null,"items":[]}`)와 `data/newid/archive.json` (`{"updated":null,"items":[]}`) 생성
+3. 데이터 게시: `publish-job-board.sh <overview.json> newid` (기본값 `hyunwoo`)
+
+데이터가 없으면 "아직 공고 데이터가 없어요"가 표시됩니다.
+
 ## 🧩 `top5` 필드 (선택)
 
-`data/jobs.json` 최상위에 `top5` 배열이 있으면 그대로 사용하고, 없으면 사이트가 자동 계산합니다.
+`data/<id>/jobs.json` 최상위에 `top5` 배열이 있으면 그대로 사용하고, 없으면 사이트가 자동 계산합니다.
 
 ```json
 {
@@ -74,8 +85,9 @@ job-board/
 ├── app.js            # 데이터 로딩 · 정렬 · 필터 · 상태 저장
 ├── style.css         # 모바일 우선 스타일
 ├── version.json      # 캐시 무효화용 에셋 버전
-├── data/jobs.json    # 매일 갱신되는 진행 중 공고
-├── data/archive.json # 지난 공고 누적 보관 (closed_at, archive_reason)
+├── data/people.json            # 사람 목록 [{id, name}]
+├── data/<id>/jobs.json         # 사람별 진행 중 공고
+├── data/<id>/archive.json      # 사람별 지난 공고 누적 보관 (closed_at, archive_reason)
 └── docs/screenshot.png
 ```
 

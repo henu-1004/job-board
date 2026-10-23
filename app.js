@@ -9,44 +9,56 @@ const pick=(j,...ks)=>{for(const k of ks){let v=j[k];if(Array.isArray(v))v=v.joi
 const HOST={'saramin':'사람인','wanted':'원티드','jumpit':'점핏','jobkorea':'잡코리아','linkareer':'링커리어','incruit':'인크루트','rocketpunch':'로켓펀치','programmers':'프로그래머스','catch':'캐치','recruiter.co.kr':'공식 채용','greetinghr':'공식 채용(그리팅)','ninehire':'공식 채용(나인하이어)'};
 function srcFromUrl(u){try{const h=new URL(u).hostname;for(const k in HOST)if(h.includes(k))return HOST[k]+' (링크 기준)';return h.replace(/^www\./,'')}catch(e){return ''}}
 function norm(j,i){const dl=j.deadline_now||j.deadline||'';const region=pick(j,'region','location','지역','loc','area','address');const exp=pick(j,'exp_tier','experience','경력','exp_original','exp_raw','exp_text','career');
- const d=dday(dl);return{...j,_i:i,_id:j.job_id||j.url||('i'+i),_dl:dl,_d:d,_region:region,_r1:(region.match(/^[가-힣]+/)||['미기재'])[0],_exp:exp||'미기재',
+ const d=dday(dl);return{...j,_i:i,_g:({S:0,A:1,B:2}[j.grade]??3),_id:j.job_id||j.url||('i'+i),_dl:dl,_d:d,_region:region,_r1:(region.match(/^[가-힣]+/)||['미기재'])[0],_exp:exp||'미기재',
  _new:!!(j.new_today||j.new||j.new_since_1013),_ai:!!(j.ai_integration||/AI연동/.test(JSON.stringify(j.tags||j.tag||''))),_closed:(j.status&&j.status!=='open')||(d!==null&&d<0),_gone:d!==null&&d<-3,_desc:pick(j,'한줄설명','desc','description','설명'),
  _src:pick(j,'source','site','출처','platform')||srcFromUrl(j.url),_stack:pick(j,'stack','tech','skills','기술스택','스택','tags'),
  _reason:[pick(j,'reason','추천이유','추천 이유','why'),pick(j,'reason2')].filter(Boolean).join(' / '),_caution:pick(j,'caution','주의점','주의','note','notes','change'),
  _expOrig:pick(j,'exp_original','exp_raw','exp_text','experience','career'),_sal:pick(j,'salary','연봉'),_url:pick(j,'url','link','url_official','alt_url','alt')}}
 fetch('data/'+P+'/jobs.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{
- const items=(Array.isArray(d)?d:d.items)||[];jobs=items.map(norm);TOPSRC=Array.isArray(d.top5)?d.top5:null;
+ const items=(Array.isArray(d)?d:d.items)||[];jobs=items.map(norm).map(prep).sort((a,b)=>(a._closed-b._closed)||(a._g-b._g)||((a._d??1e4)-(b._d??1e4)));byI=new Map(jobs.map(j=>[j._i,j]));TOPSRC=Array.isArray(d.top5)?d.top5:null;
  if(!jobs.length){$('updated').textContent='마지막 업데이트: -';$('counts').textContent='';$('top5').innerHTML='';$('list').innerHTML='<div class="empty">📭 아직 공고 데이터가 없어요</div>';return}
  $('updated').textContent='마지막 업데이트: '+(d.as_of?new Date(d.as_of).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})+' (KST)':'알 수 없음');
  const g=k=>jobs.filter(j=>j.grade===k).length;$('counts').textContent=`총 ${jobs.length}건 · S${g('S')} / A${g('A')} / B${g('B')} · 🤖 ${jobs.filter(j=>j._ai).length}`;
  [...new Set(jobs.map(j=>j._r1))].sort().forEach(r=>$('region').add(new Option(r,r)));
  [...new Set(jobs.map(j=>j._exp))].sort().forEach(r=>$('exp').add(new Option(r,r)));ST.forEach(s=>$('mystat').add(new Option(s,s)));render()})
  .catch(e=>{$('list').innerHTML='<div class="empty">📭 아직 공고 데이터가 없어요</div>';$('updated').textContent='마지막 업데이트: -'});
-['q','grade','region','exp','mystat','ai'].forEach(id=>$(id).addEventListener('input',render));
-const go={S:0,A:1,B:2};
-function render(){if(tab!=='arch'&&!jobs.length)return;if(tab==='arch'){renderArch();return}renderTop();const q=$('q').value.trim().toLowerCase(),gr=$('grade').value,rg=$('region').value,ex=$('exp').value,ms=$('mystat').value;
- const L=jobs.filter(j=>(!gr||j.grade===gr)&&(!rg||j._r1===rg)&&(!ex||j._exp===ex)&&(!$('ai').checked||j._ai)&&!j._gone
-  &&(!ms||(ms==='none'?!saved[j._id]:saved[j._id]===ms))&&(!q||[j.company,j.title,j.role,j._stack,j._src,j._region,j._desc].join(' ').toLowerCase().includes(q)))
- .sort((a,b)=>(a._closed-b._closed)||((go[a.grade]??3)-(go[b.grade]??3))||((a._d??1e4)-(b._d??1e4)));
- $('list').innerHTML=L.length?L.map(card).join(''):'<p>조건에 맞는 공고가 없어요.</p>'}
+function prep(j){j._hay=[j.company,j.title,j.role,j._stack,j._src,j._region,j._desc].join(' ').toLowerCase();return j}
+const PAGE=30;let L=[],shown=0,byI=new Map(),qT;const LIST=$('list'),tpl=document.createElement('template');
+['grade','region','exp','mystat','ai'].forEach(id=>$(id).addEventListener('input',render));
+$('q').addEventListener('input',()=>{clearTimeout(qT);qT=setTimeout(render,200)});
+function filt(){const q=$('q').value.trim().toLowerCase(),gr=$('grade').value,rg=$('region').value,ex=$('exp').value,ms=$('mystat').value,ai=$('ai').checked;
+ return jobs.filter(j=>!j._gone&&(!gr||j.grade===gr)&&(!rg||j._r1===rg)&&(!ex||j._exp===ex)&&(!ai||j._ai)&&(!ms||(ms==='none'?!saved[j._id]:saved[j._id]===ms))&&(!q||j._hay.includes(q)))}
+function nodes(html){tpl.innerHTML=html;return tpl.content}
+let io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))more()},{rootMargin:'800px'});
+function more(n){if(shown>=L.length)return;const end=Math.min(L.length,n||shown+PAGE);const s=$('sentinel');
+ const frag=nodes(L.slice(shown,end).map(card).join(''));s?LIST.insertBefore(frag,s):LIST.appendChild(frag);shown=end;if(s){if(shown>=L.length)s.remove();else{s.textContent=`더 보기 (${L.length-shown}건 남음)`;io.unobserve(s);io.observe(s)}}}
+function render(keep){if(tab!=='arch'&&!jobs.length)return;if(tab==='arch'){renderArch();return}renderTop();
+ const n=keep?Math.max(shown,PAGE):PAGE;L=filt();shown=0;io.disconnect();
+ if(!L.length){LIST.innerHTML='<p>조건에 맞는 공고가 없어요.</p>';return}
+ LIST.textContent='';const s=mkS();LIST.appendChild(s);more(n);if($('sentinel'))io.observe(s)}
+function mkS(){const s=document.createElement('button');s.type='button';s.id='sentinel';s.className='sentinel';s.onclick=()=>more();return s}
+function repaint(j){const el=$('c'+j._i);if(el)el.replaceWith(nodes(card(j)))}
+LIST.addEventListener('click',e=>{if(e.target.closest('a'))return;const b=e.target.closest('[data-s]');const c=e.target.closest('[data-i]');if(!c)return;const j=byI.get(+c.dataset.i);
+ if(b){const s=b.dataset.s;if(saved[j._id]===s)delete saved[j._id];else saved[j._id]=s;localStorage.setItem(KEY,JSON.stringify(saved));
+  if($('mystat').value)render(true);else{repaint(j);renderTop()}return}
+ if(e.target.closest('.fold')||c.classList.contains('rowc')){open.has(j._id)?open.delete(j._id):open.add(j._id);repaint(j)}});
 const ICON={'관심':'⭐','지원함':'📨','서류합격':'✅','탈락':'❌','패스':'⏭️'};
 let view=new URLSearchParams(location.search).get('view')||localStorage.getItem('jobboard-view')||'full';const open=new Set();
-function setView(v){view=v;localStorage.setItem('jobboard-view',v);$('v-full').classList.toggle('on',v==='full');$('v-compact').classList.toggle('on',v==='compact');['v-full','v-compact'].forEach(x=>$(x).setAttribute('aria-pressed',$(x).classList.contains('on')));render()}
+function setView(v){view=v;localStorage.setItem('jobboard-view',v);$('v-full').classList.toggle('on',v==='full');$('v-compact').classList.toggle('on',v==='compact');['v-full','v-compact'].forEach(x=>$(x).setAttribute('aria-pressed',$(x).classList.contains('on')));
+ if(tab==='open'&&jobs.length){io.disconnect();const n=shown;LIST.textContent='';const s=mkS();LIST.appendChild(s);shown=0;more(n||PAGE);if($('sentinel'))io.observe(s)}else render()}
 document.addEventListener('click',e=>{const b=e.target.closest('#v-full,#v-compact');if(b)setView(b.id==='v-compact'?'compact':'full')});setView(view);
-function tog(id){open.has(id)?open.delete(id):open.add(id);render()}
 function dlabel(j){const d=j._d;return d===null?esc(j._dl||'미기재'):d<0?'마감':d===0?'오늘':d===1?'내일':'D-'+d}
 function card(j){if(view==='compact'&&!open.has(j._id))return row(j);return full(j)}
-function row(j){const d=j._d,id=esc(j._id).replace(/'/g,'');
- return `<div id="c${j._i}" class="rowc${j._closed?' closed':''}" onclick="tog('${id}')"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${dlabel(j)}</span>
+function row(j){const d=j._d;
+ return `<div id="c${j._i}" data-i="${j._i}" class="rowc${j._closed?' closed':''}"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${dlabel(j)}</span>
  <div class="rm"><div class="rt"><b>${esc(j.company)}</b> ${j._ai?'🤖':''}${j._new?'📌':''}${saved[j._id]?' '+ICON[saved[j._id]]:''}</div><div class="rp">${esc(j.title||j.role)}</div><div class="rs">${[j._region,j._exp==='미기재'?'':j._exp].filter(Boolean).map(esc).join(' · ')}</div></div>
- <a class="rl" href="${esc(j._url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗</a></div>`}
+ <a class="rl" href="${esc(j._url)}" target="_blank" rel="noopener">↗</a></div>`}
 function full(j){const d=j._d;let db=d===null?esc(j._dl||'기한 미기재'):d<0?'마감':d===0?'오늘 마감':d===1?'내일 마감':'D-'+d;
  const f=[['출처',j._src],['지역',j._region],['경력',j._exp+(j._expOrig&&j._expOrig!==j._exp?' ('+j._expOrig+')':'')],['스택',j._stack],['연봉',j._sal],['마감',j._dl],['추천 이유',j._reason],['주의',j._caution]].filter(([k,v])=>v&&!MISS.test(v));
- return `<div id="c${j._i}" class="card${j._closed?' closed':''}"><div class="top"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${db}</span>${j._new?'<span class="b new">📌 신규</span>':''}${j._ai?'<span class="b ai">🤖 AI연동</span>':''}</div>
- ${view==='compact'?`<button class="fold" onclick="tog('${esc(j._id).replace(/'/g,'')}')">접기 ▲</button>`:''}<div class="co">${esc(j.company)}</div><div class="ti"><a href="${esc(j._url)}" target="_blank" rel="noopener">${esc(j.title||j.role)} ↗</a></div>
+ return `<div id="c${j._i}" data-i="${j._i}" class="card${j._closed?' closed':''}"><div class="top"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${db}</span>${j._new?'<span class="b new">📌 신규</span>':''}${j._ai?'<span class="b ai">🤖 AI연동</span>':''}</div>
+ ${view==='compact'?'<button type="button" class="fold">접기 ▲</button>':''}<div class="co">${esc(j.company)}</div><div class="ti"><a href="${esc(j._url)}" target="_blank" rel="noopener">${esc(j.title||j.role)} ↗</a></div>
  <dl>${f.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}</dl><div class="desc">${esc(j._desc)}</div>
- <div class="st">${ST.map(s=>`<button class="${saved[j._id]===s?'on':''}" onclick="setS('${esc(j._id).replace(/'/g,'')}','${s}')">${s}</button>`).join('')}</div></div>`}
-function setS(id,s){if(saved[id]===s)delete saved[id];else saved[id]=s;localStorage.setItem(KEY,JSON.stringify(saved));render()}
+ <div class="st">${ST.map(s=>`<button type="button" data-s="${s}" class="${saved[j._id]===s?'on':''}">${s}</button>`).join('')}</div></div>`}
 
 let topOpen=localStorage.getItem('jobboard-top')!=='0';
 function autoWhy(j){const p=[j.grade+'급'];if(j._d!==null&&j._d<=7)p.push(j._d===0?'오늘 마감':j._d===1?'내일 마감':'D-'+j._d);if(j._new)p.push('신규');if(j._ai)p.push('AI연동');return p.join('·')}
@@ -59,8 +71,9 @@ function renderTop(){const el=$('top5');if(!el||!jobs.length)return;const L=topL
  return `<div class="ti5" onclick="goTo(${j._i})"><span class="rk">${n+1}</span><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${dlabel(j)}</span>
  <div class="rm"><div class="rt"><b>${esc(j.company)}</b> ${j._ai?'🤖':''}${j._new?'📌':''}</div><div class="rp">${esc(j.title||j.role)}</div><div class="rs why">${esc(why)}</div></div>
  <a class="rl" href="${esc(j._url)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗</a></div>`}).join(''):'')}
-function goTo(i){const j=jobs[i];open.add(j._id);render();let el=$('c'+i);
- if(!el){['q','grade','region','exp','mystat'].forEach(x=>$(x).value='');$('ai').checked=false;render();el=$('c'+i)}
+function goTo(i){const j=byI.get(i);open.add(j._id);let k=L.indexOf(j);
+ if(k<0){['q','grade','region','exp','mystat'].forEach(x=>$(x).value='');$('ai').checked=false;render();k=L.indexOf(j)}
+ if(k>=shown)more(k+1);let el=$('c'+i);if(el&&el.classList.contains('rowc')){repaint(j);el=$('c'+i)}
  if(el){el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1500)}}
 
 

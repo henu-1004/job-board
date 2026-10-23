@@ -9,7 +9,7 @@
 
 ## 👉 [**henu-1004.github.io/job-board 바로가기**](https://henu-1004.github.io/job-board/)
 
-<p align="center"><img src="docs/screenshot.png" alt="모바일 화면" width="360"></p>
+<p align="center"><img src="docs/screenshot.png" alt="자세히 보기" width="300"> <img src="docs/screenshot-compact.png" alt="간략히 보기" width="300"></p>
 
 ## ✨ 주요 기능
 
@@ -19,6 +19,7 @@
 - **🤖 AI연동** — LLM·RAG 등 AI 서비스와 연동하는 Spring 백엔드 공고만 모아보기
 - **📌 신규** — 새로 올라온 공고 표시
 - **지원 상태 저장** — 관심 / 지원함 / 서류합격 / 탈락 / 패스 (브라우저 localStorage)
+- **간략히 / 자세히 보기** — 한 줄 요약 목록으로 훑어보고, 탭하면 전체 카드로 펼침 (선택 기억)
 - **모바일 최적화** — 휴대폰에서 바로 확인 가능한 카드형 UI
 
 ## 🏷️ 등급 기준

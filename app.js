@@ -19,10 +19,21 @@ function render(){const q=$('q').value.trim().toLowerCase(),gr=$('grade').value,
   &&(!ms||(ms==='none'?!saved[j._id]:saved[j._id]===ms))&&(!q||[j.company,j.title,j.role,j.stack,j._region,j._desc].join(' ').toLowerCase().includes(q)))
  .sort((a,b)=>(a._closed-b._closed)||((go[a.grade]??3)-(go[b.grade]??3))||((a._d??1e4)-(b._d??1e4)));
  $('list').innerHTML=L.length?L.map(card).join(''):'<p>조건에 맞는 공고가 없어요.</p>'}
-function card(j){const d=j._d;let db=d===null?esc(j._dl||'기한 미기재'):d<0?'마감':d===0?'오늘 마감':d===1?'내일 마감':'D-'+d;
+const ICON={'관심':'⭐','지원함':'📨','서류합격':'✅','탈락':'❌','패스':'⏭️'};
+let view=new URLSearchParams(location.search).get('view')||localStorage.getItem('jobboard-view')||'full';const open=new Set();
+function setView(v){view=v;localStorage.setItem('jobboard-view',v);$('v-full').classList.toggle('on',v==='full');$('v-compact').classList.toggle('on',v==='compact');render()}
+$('v-full').onclick=()=>setView('full');$('v-compact').onclick=()=>setView('compact');setTimeout(()=>setView(view));
+function tog(id){open.has(id)?open.delete(id):open.add(id);render()}
+function dlabel(j){const d=j._d;return d===null?esc(j._dl||'미기재'):d<0?'마감':d===0?'오늘':d===1?'내일':'D-'+d}
+function card(j){if(view==='compact'&&!open.has(j._id))return row(j);return full(j)}
+function row(j){const d=j._d,id=esc(j._id).replace(/'/g,'');
+ return `<div class="rowc${j._closed?' closed':''}" onclick="tog('${id}')"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${dlabel(j)}</span>
+ <div class="rm"><div class="rt"><b>${esc(j.company)}</b> ${j._ai?'🤖':''}${j._new?'📌':''}${saved[j._id]?' '+ICON[saved[j._id]]:''}</div><div class="rp">${esc(j.title||j.role)}</div><div class="rs">${esc(j._region||'지역 미기재')} · ${esc(j._exp)}</div></div>
+ <a class="rl" href="${esc(j.url||j.url_official)}" target="_blank" rel="noopener" onclick="event.stopPropagation()">↗</a></div>`}
+function full(j){const d=j._d;let db=d===null?esc(j._dl||'기한 미기재'):d<0?'마감':d===0?'오늘 마감':d===1?'내일 마감':'D-'+d;
  const f=[['출처',j.source],['지역',j._region],['경력',j._exp],['스택',j.stack],['마감',j._dl],['추천 이유',j.reason],['주의',j.caution]];
  return `<div class="card${j._closed?' closed':''}"><div class="top"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${db}</span>${j._new?'<span class="b new">📌 신규</span>':''}${j._ai?'<span class="b ai">🤖 AI연동</span>':''}</div>
- <div class="co">${esc(j.company)}</div><div class="ti"><a href="${esc(j.url||j.url_official)}" target="_blank" rel="noopener">${esc(j.title||j.role)} ↗</a></div>
+ ${view==='compact'?`<button class="fold" onclick="tog('${esc(j._id).replace(/'/g,'')}')">접기 ▲</button>`:''}<div class="co">${esc(j.company)}</div><div class="ti"><a href="${esc(j.url||j.url_official)}" target="_blank" rel="noopener">${esc(j.title||j.role)} ↗</a></div>
  <dl>${f.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v||'미기재')}</dd>`).join('')}</dl><div class="desc">${esc(j._desc)}</div>
  <div class="st">${ST.map(s=>`<button class="${saved[j._id]===s?'on':''}" onclick="setS('${esc(j._id).replace(/'/g,'')}','${s}')">${s}</button>`).join('')}</div></div>`}
 function setS(id,s){if(saved[id]===s)delete saved[id];else saved[id]=s;localStorage.setItem(KEY,JSON.stringify(saved));render()}

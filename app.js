@@ -74,7 +74,7 @@ function renderTop(){const el=$('top5');if(!el||!jobs.length)return;const L=topL
 function goTo(i){const j=byI.get(i);open.add(j._id);let k=L.indexOf(j);
  if(k<0){['q','grade','region','exp','mystat'].forEach(x=>$(x).value='');$('ai').checked=false;render();k=L.indexOf(j)}
  if(k>=shown)more(k+1);let el=$('c'+i);if(el&&el.classList.contains('rowc')){repaint(j);el=$('c'+i)}
- if(el){el.scrollIntoView({behavior:'smooth',block:'start'});el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1500)}}
+ if(el){el.style.contentVisibility='visible';el.scrollIntoView({block:'start'});requestAnimationFrame(()=>requestAnimationFrame(()=>el.scrollIntoView({block:'start'})));setTimeout(()=>{el.scrollIntoView({block:'start'});el.style.contentVisibility=''},350);el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1500)}}
 
 
 function setTab(t){tab=t;$('t-open').classList.toggle('on',t==='open');$('t-arch').classList.toggle('on',t==='arch');

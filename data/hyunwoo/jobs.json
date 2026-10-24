@@ -7047,7 +7047,8 @@
    "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55173376",
    "deadline": "2026-10-23",
    "grade": "A",
-   "note": "마감/마감일 경과"
+   "note": "마감/마감일 경과",
+   "job_id": "winitech-dev-2026h2-55173376"
   },
   {
    "company": "투씨에스지",
@@ -7055,7 +7056,8 @@
    "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55116413",
    "deadline": "2026-10-23",
    "grade": "A",
-   "note": "마감/마감일 경과"
+   "note": "마감/마감일 경과",
+   "job_id": "tocsg-fe-be-spring-55116413"
   },
   {
    "company": "아카넷",
@@ -7063,7 +7065,8 @@
    "url": "https://www.jobkorea.co.kr/Recruit/GI_Read/50004631",
    "deadline": "2026-10-23",
    "grade": "B",
-   "note": "마감/마감일 경과"
+   "note": "마감/마감일 경과",
+   "job_id": "acanet-web-java-daejeon-50004631"
   },
   {
    "company": "인버스",
@@ -7071,7 +7074,8 @@
    "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55088115",
    "deadline": "2026-10-23",
    "grade": "B",
-   "note": "마감/마감일 경과"
+   "note": "마감/마감일 경과",
+   "job_id": "inbus-java-55088115"
   },
   {
    "company": "에스피코리아",
@@ -7079,7 +7083,8 @@
    "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55097733",
    "deadline": "2026-10-23",
    "grade": "B",
-   "note": "마감/마감일 경과"
+   "note": "마감/마감일 경과",
+   "job_id": "spkorea-be-55097733"
   },
   {
    "company": "위세아이텍",
@@ -7087,7 +7092,8 @@
    "url": "https://www.jobkorea.co.kr/Recruit/GI_Read/50046914",
    "deadline": "2026-10-23",
    "grade": "B",
-   "note": "마감/마감일 경과"
+   "note": "마감/마감일 경과",
+   "job_id": "jobkorea-50046914"
   },
   {
    "company": "푸른저축은행",
@@ -7095,7 +7101,8 @@
    "url": "https://www.saramin.co.kr/zf_user/jobs/view?rec_idx=55287471",
    "deadline": "2026-10-23",
    "grade": "B",
-   "note": "마감/마감일 경과"
+   "note": "마감/마감일 경과",
+   "job_id": "saramin-55287471"
   },
   {
    "company": "크래프톤",
@@ -7103,7 +7110,8 @@
    "url": "https://recruit.krafton.com/",
    "deadline": "2026-10-23",
    "grade": "B",
-   "note": "마감/마감일 경과"
+   "note": "마감/마감일 경과",
+   "job_id": "krafton-2027-intern-tech"
   }
  ]
 }

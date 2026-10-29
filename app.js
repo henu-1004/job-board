@@ -15,7 +15,7 @@ function norm(j,i){const dl=j.deadline_now||j.deadline||'';const region=pick(j,'
  _reason:[pick(j,'reason','추천이유','추천 이유','why'),pick(j,'reason2')].filter(Boolean).join(' / '),_caution:pick(j,'caution','주의점','주의','note','notes','change'),
  _expOrig:pick(j,'exp_original','exp_raw','exp_text','experience','career'),_sal:pick(j,'salary','연봉'),_url:pick(j,'url','link','url_official','alt_url','alt')}}
 fetch('data/'+P+'/jobs.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{
- const items=(Array.isArray(d)?d:d.items)||[];jobs=items.map(norm).map(prep).sort((a,b)=>(a._closed-b._closed)||(a._g-b._g)||((b.no_test?1:0)-(a.no_test?1:0))||((a._d??1e4)-(b._d??1e4)));byI=new Map(jobs.map(j=>[j._i,j]));TOPSRC=Array.isArray(d.top5)?d.top5:null;
+ const items=(Array.isArray(d)?d:d.items)||[];jobs=items.map(norm).map(prep).sort((a,b)=>(a._closed-b._closed)||(a._g-b._g)||((b.recommended?1:0)-(a.recommended?1:0))||((b.no_test?1:0)-(a.no_test?1:0))||((a._d??1e4)-(b._d??1e4)));byI=new Map(jobs.map(j=>[j._i,j]));TOPSRC=Array.isArray(d.top5)?d.top5:null;
  if(!jobs.length){$('updated').textContent='마지막 업데이트: -';$('counts').textContent='';$('top5').innerHTML='';$('list').innerHTML='<div class="empty">📭 아직 공고 데이터가 없어요</div>';return}
  $('updated').textContent='마지막 업데이트: '+(d.as_of?new Date(d.as_of).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})+' (KST)':'알 수 없음');
  const g=k=>jobs.filter(j=>j.grade===k).length;$('counts').textContent=`총 ${jobs.length}건 · S${g('S')} / A${g('A')} / B${g('B')} · 🤖 ${jobs.filter(j=>j._ai).length}`;
@@ -24,10 +24,10 @@ fetch('data/'+P+'/jobs.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json())
  .catch(e=>{$('list').innerHTML='<div class="empty">📭 아직 공고 데이터가 없어요</div>';$('updated').textContent='마지막 업데이트: -'});
 function prep(j){j._hay=[j.company,j.title,j.role,j._stack,j._src,j._region,j._desc].join(' ').toLowerCase();return j}
 const PAGE=30;let L=[],shown=0,byI=new Map(),qT;const LIST=$('list'),tpl=document.createElement('template');
-['grade','region','exp','mystat','ai'].forEach(id=>$(id).addEventListener('input',render));
+['grade','region','exp','mystat','ai','rec'].forEach(id=>$(id).addEventListener('input',render));
 $('q').addEventListener('input',()=>{clearTimeout(qT);qT=setTimeout(render,200)});
-function filt(){const q=$('q').value.trim().toLowerCase(),gr=$('grade').value,rg=$('region').value,ex=$('exp').value,ms=$('mystat').value,ai=$('ai').checked;
- return jobs.filter(j=>!j._gone&&(!gr||j.grade===gr)&&(!rg||j._r1===rg)&&(!ex||j._exp===ex)&&(!ai||j._ai)&&(!ms||(ms==='none'?!saved[j._id]:saved[j._id]===ms))&&(!q||j._hay.includes(q)))}
+function filt(){const q=$('q').value.trim().toLowerCase(),gr=$('grade').value,rg=$('region').value,ex=$('exp').value,ms=$('mystat').value,ai=$('ai').checked,rc=$('rec')&&$('rec').checked;
+ return jobs.filter(j=>!j._gone&&(!gr||j.grade===gr)&&(!rg||j._r1===rg)&&(!ex||j._exp===ex)&&(!ai||j._ai)&&(!rc||j.recommended)&&(!ms||(ms==='none'?!saved[j._id]:saved[j._id]===ms))&&(!q||j._hay.includes(q)))}
 function nodes(html){tpl.innerHTML=html;return tpl.content}
 let io=new IntersectionObserver(es=>{if(es.some(e=>e.isIntersecting))more()},{rootMargin:'800px'});
 function more(n){if(shown>=L.length)return;const end=Math.min(L.length,n||shown+PAGE);const s=$('sentinel');
@@ -50,12 +50,12 @@ document.addEventListener('click',e=>{const b=e.target.closest('#v-full,#v-compa
 function dlabel(j){const d=j._d;return d===null?esc(j._dl||'미기재'):d<0?'마감':d===0?'오늘':d===1?'내일':'D-'+d}
 function card(j){if(view==='compact'&&!open.has(j._id))return row(j);return full(j)}
 function row(j){const d=j._d;
- return `<div id="c${j._i}" data-i="${j._i}" class="rowc${j._closed?' closed':''}"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${dlabel(j)}</span>
+ return `<div id="c${j._i}" data-i="${j._i}" class="rowc${j._closed?' closed':''}"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span>${j.recommended?'<span class="b rec">👍 추천</span>':''}<span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${dlabel(j)}</span>
  <div class="rm"><div class="rt"><b>${esc(j.company)}</b> ${j._ai?'🤖':''}${j._new?'📌':''}${saved[j._id]?' '+ICON[saved[j._id]]:''}</div><div class="rp">${esc(j.title||j.role)}</div><div class="rs">${[j._region,j._exp==='미기재'?'':j._exp].filter(Boolean).map(esc).join(' · ')}</div></div>
  <a class="rl" href="${esc(j._url)}" target="_blank" rel="noopener">↗</a></div>`}
 function full(j){const d=j._d;let db=d===null?esc(j._dl||'기한 미기재'):d<0?'마감':d===0?'오늘 마감':d===1?'내일 마감':'D-'+d;
  const f=[['출처',j._src],['지역',j._region],['경력',j._exp+(j._expOrig&&j._expOrig!==j._exp?' ('+j._expOrig+')':'')],['스택',j._stack],['연봉',j._sal],['마감',j._dl],['추천 이유',j._reason],['주의',j._caution]].filter(([k,v])=>v&&!MISS.test(v));
- return `<div id="c${j._i}" data-i="${j._i}" class="card${j._closed?' closed':''}"><div class="top"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${db}</span>${j._new?'<span class="b new">📌 신규</span>':''}${j._ai?'<span class="b ai">🤖 AI연동</span>':''}</div>
+ return `<div id="c${j._i}" data-i="${j._i}" class="card${j._closed?' closed':''}"><div class="top"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${d!==null&&d>=0&&d<=1?'urgent':'dd'}">${db}</span>${j._new?'<span class="b new">📌 신규</span>':''}${j._ai?'<span class="b ai">🤖 AI연동</span>':''}${j.recommended?'<span class="b rec">👍 추천</span>':''}</div>${j.recommended&&j.recommend_reason?'<div class="recr">👍 '+esc(j.recommend_reason)+'</div>':''}
  ${view==='compact'?'<button type="button" class="fold">접기 ▲</button>':''}<div class="co">${esc(j.company)}</div><div class="ti"><a href="${esc(j._url)}" target="_blank" rel="noopener">${esc(j.title||j.role)} ↗</a></div>
  <dl>${f.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}</dl><div class="desc">${esc(j._desc)}</div>
  <div class="st">${ST.map(s=>`<button type="button" data-s="${s}" class="${saved[j._id]===s?'on':''}">${s}</button>`).join('')}</div></div>`}

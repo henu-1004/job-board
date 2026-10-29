@@ -15,7 +15,7 @@ function norm(j,i){const dl=j.deadline_now||j.deadline||'';const region=pick(j,'
  _reason:[pick(j,'reason','추천이유','추천 이유','why'),pick(j,'reason2')].filter(Boolean).join(' / '),_caution:pick(j,'caution','주의점','주의','note','notes','change'),
  _expOrig:pick(j,'exp_original','exp_raw','exp_text','experience','career'),_sal:pick(j,'salary','연봉'),_url:pick(j,'url','link','url_official','alt_url','alt')}}
 fetch('data/'+P+'/jobs.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(d=>{
- const items=(Array.isArray(d)?d:d.items)||[];jobs=items.map(norm).map(prep).sort((a,b)=>(a._closed-b._closed)||(a._g-b._g)||((a._d??1e4)-(b._d??1e4)));byI=new Map(jobs.map(j=>[j._i,j]));TOPSRC=Array.isArray(d.top5)?d.top5:null;
+ const items=(Array.isArray(d)?d:d.items)||[];jobs=items.map(norm).map(prep).sort((a,b)=>(a._closed-b._closed)||(a._g-b._g)||((b.no_test?1:0)-(a.no_test?1:0))||((a._d??1e4)-(b._d??1e4)));byI=new Map(jobs.map(j=>[j._i,j]));TOPSRC=Array.isArray(d.top5)?d.top5:null;
  if(!jobs.length){$('updated').textContent='마지막 업데이트: -';$('counts').textContent='';$('top5').innerHTML='';$('list').innerHTML='<div class="empty">📭 아직 공고 데이터가 없어요</div>';return}
  $('updated').textContent='마지막 업데이트: '+(d.as_of?new Date(d.as_of).toLocaleString('ko-KR',{timeZone:'Asia/Seoul'})+' (KST)':'알 수 없음');
  const g=k=>jobs.filter(j=>j.grade===k).length;$('counts').textContent=`총 ${jobs.length}건 · S${g('S')} / A${g('A')} / B${g('B')} · 🤖 ${jobs.filter(j=>j._ai).length}`;

@@ -1,5 +1,6 @@
 let tab='open',ARCH=null,TOPSRC=null;
 const QP=new URLSearchParams(location.search);let P=(QP.get('p')||localStorage.getItem('jobboard-person')||'hyunwoo').replace(/[^a-z0-9_-]/gi,'');
+if(P==='sidegig'){P='hyunwoo';localStorage.setItem('jobboard-person',P);localStorage.setItem('jobboard-mode-hyunwoo','sidegig');const _u=new URL(location.href);_u.searchParams.set('p','hyunwoo');if(!_u.searchParams.get('m'))_u.searchParams.set('m','sidegig');history.replaceState(null,'',_u);}
 const ST=['관심','지원함','서류합격','탈락','패스'],KEY=P==='hyunwoo'?'jobboard-status':'jobboard-status-'+P;let saved=JSON.parse(localStorage.getItem(KEY)||'{}'),jobs=[];
 const $=id=>document.getElementById(id),esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
 const today=()=>{const k=new Date(Date.now()+9*36e5);return Date.UTC(k.getUTCFullYear(),k.getUTCMonth(),k.getUTCDate())};
@@ -94,7 +95,7 @@ localStorage.setItem('jobboard-person',P);
 fetch('data/people.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(L=>{
  if(!L.some(x=>x.id===P)){P='hyunwoo';localStorage.setItem('jobboard-person',P);location.search='?p=hyunwoo';return}
  $('people').innerHTML=L.map(x=>`<button type="button" class="${x.id===P?'on':''}" aria-pressed="${x.id===P}" data-p="${esc(x.id)}">${esc(x.name)}</button>`).join('');
- document.title=(L.find(x=>x.id===P)||{}).name+(window.MODE==='contest'?' · 대회 보드':' · 채용 공고 보드')}).catch(()=>{});
+ document.title=(L.find(x=>x.id===P)||{}).name+(window.MODE==='contest'?' · 대회 보드':window.MODE==='sidegig'?' · 부업 보드':' · 채용 공고 보드')}).catch(()=>{});
 $('people').addEventListener('click',e=>{const b=e.target.closest('button[data-p]');if(!b||b.dataset.p===P)return;localStorage.setItem('jobboard-person',b.dataset.p);const u=new URL(location.href);u.searchParams.set('p',b.dataset.p);location.href=u.toString()});
 
 (function(){const base='https://henujobs.goatcounter.com/counter/'+encodeURIComponent('/job-board/')+'.json',fmt=n=>Number(String(n).replace(/\D/g,'')||0).toLocaleString('ko-KR');

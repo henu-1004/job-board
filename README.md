@@ -79,7 +79,7 @@ GitHub Pages     정적 사이트 자동 배포 (빌드 단계 없음)
 
 ## 🏆 대회 탭 (`?p=hyunwoo&m=contest`)
 
-`data/people.json`에서 `"contests": true`인 사람에게만 상단에 **💼 채용 / 🏆 대회** 전환 버튼이 보입니다 (선택은 사람별로 기억, `m=contest`로 URL 지정 가능).
+`data/people.json`에서 `"contests": true`인 사람에게만 상단에 **💼 채용 / 🏆 대회** 전환 버튼이 보입니다 (선택은 사람별로 기억, `m=contest`로 URL 지정 가능). `"sidegigs": true`이면 **💰 부업** 버튼이 함께 열립니다.
 
 - 등급·분야·내 상태 필터, 검색, 마감 임박순 / 등급순 정렬, D-day 배지(오늘·내일 빨강, 2~3일 주황)
 - 마감이 지난 대회는 진행 중 목록에서 자동으로 빠지고 **지난 대회** 탭에 표시 (`contests-archive.json`과 합쳐 월별로 묶음)
@@ -108,20 +108,60 @@ GitHub Pages     정적 사이트 자동 배포 (빌드 단계 없음)
 
 **`data/<id>/contests-archive.json`**: `{"updated": "...", "items": [ ...위와 같은 필드 + "closed_at": "YYYY-MM-DD", "archive_reason": "마감" ]}` — 지난 대회 누적 보관(삭제 없음).
 
+
+## 💰 부업 탭 (`?p=hyunwoo&m=sidegig`)
+
+`data/people.json`에서 `"sidegigs": true`인 사람에게만 **💰 부업** 모드가 보입니다 (선택은 사람별로 기억, `m=sidegig`로 URL 지정 가능). 예전 단독 보드 `?p=sidegig`은 `?p=hyunwoo&m=sidegig`으로 조용히 이어집니다.
+
+- 등급·플랫폼·내 상태 필터, 검색, 마감 임박순 / 등급순 정렬, D-day 배지(오늘·내일 빨강, 2~3일 주황)
+- 카드에는 등급, 플랫폼, 제목, 수입·기간, 추천 이유, 주의(겸업 등), 마감/D-day를 보여줍니다
+- 마감이 지난 건은 진행 중 목록에서 자동으로 빠지고 **지난 부업** 탭에 표시 (`sidegigs-archive.json`과 합쳐 월별로 묶음)
+- 내 상태 저장: 관심 / 지원함 / 패스 (localStorage `sidegig-status-<id>`)
+
+**`data/<id>/sidegigs.json`**
+
+```json
+{ "as_of": "2026-11-18T12:35+09:00", "items": [ { "job_id": "wishket-159656", "title": "...", "url": "https://...", "grade": "A", "deadline": "2026-11-23T23:59:00+09:00", ... } ] }
+```
+
+| 키 | 설명 |
+|---|---|
+| `job_id` | 고유 id (`wishket-159656`, `albamon-120076036` 형식). 내 상태 저장 키 |
+| `title` / `url` / `link` | 공고 제목 / 개별 공고 URL (`url`과 `link`는 같게) |
+| `company` | 플랫폼 또는 클라이언트명 |
+| `source` | 플랫폼 (위시켓·크몽 엔터프라이즈·알바몬 등). 카드의 플랫폼 표시에 사용 |
+| `grade` | `S` · `A` · `B` |
+| `salary` | 공고에 적힌 수입·기간 |
+| `reason` | 한 줄 추천 이유 |
+| `caution` | 겸업·일정 주의 |
+| `deadline` / `deadline_kst` | 지원 마감 `YYYY-MM-DDTHH:MM:SS+09:00` 또는 `"상시"` / `"미기재"` |
+| `deadline_now` | 날짜 `YYYY-MM-DD` 또는 `"상시"` / `"미기재"` |
+| `status` | 진행 중이면 `"open"` |
+| `first_seen` / `last_seen` | 처음 넣은 시각 / 마지막 재확인 시각 |
+| `new` / `new_today` | 처음 넣은 날만 `true` (📌 신규) |
+| `region` / `stack` / `desc` / `한줄설명` | 근무 형태·직무·짧은 요약 (카드 검색에 쓰임) |
+| `exp_tier` | 해당 없으면 `"미기재"` |
+| `verify` | `1118 재확인: 열림` 형식 |
+| `change` | 보통 `null` |
+
+**`data/<id>/sidegigs-archive.json`**: `{"updated": "...", "items": [ ...위와 같은 필드 + "closed_at": "YYYY-MM-DD", "archive_reason": "마감" ]}` — 지난 부업 누적 보관(삭제 없음). 새 보고를 넣을 때는 `sidegigs.json`의 `as_of`를 `YYYY-MM-DDTHH:MM+09:00`(한국 시간)으로 바꾸고, 마감·제외 건은 archive로 옮긴다.
+
 ## 📁 파일 구조
 
 ```
 job-board/
 ├── index.html        # 페이지 골격
 ├── app.js            # 데이터 로딩 · 정렬 · 필터 · 상태 저장
-├── contest.js        # 대회 탭 (contests:true인 사람만)
+├── contest.js        # 대회·부업 탭 (contests/sidegigs 플래그가 있는 사람만)
 ├── style.css         # 모바일 우선 스타일
 ├── version.json      # 캐시 무효화용 에셋 버전
-├── data/people.json            # 사람 목록 [{id, name}]
+├── data/people.json            # 사람 목록 [{id, name, contests?, sidegigs?}]
 ├── data/<id>/jobs.json         # 사람별 진행 중 공고
 ├── data/<id>/archive.json      # 사람별 지난 공고 누적 보관 (closed_at, archive_reason)
 ├── data/<id>/contests.json     # 진행 중 대회 (선택)
 ├── data/<id>/contests-archive.json  # 지난 대회 누적 보관 (선택)
+├── data/<id>/sidegigs.json     # 진행 중 부업 (선택)
+├── data/<id>/sidegigs-archive.json  # 지난 부업 누적 보관 (선택)
 └── docs/screenshot.png
 ```
 

@@ -2,8 +2,8 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <meta name="robots" content="noindex">
 <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate"><meta http-equiv="Pragma" content="no-cache"><meta http-equiv="Expires" content="0"><title>채용 공고 보드</title>
-<link id="css" rel="stylesheet" href="style.css?v=11"></head><body>
-<header><div id="people" class="people"></div><nav id="modes" class="modes" hidden><button type="button" id="m-job" class="on" aria-pressed="true">💼 채용</button><button type="button" id="m-con" aria-pressed="false">🏆 대회</button></nav><div class="hd"><h1>채용 공고 보드</h1><div class="vt"><button type="button" id="v-full" aria-pressed="false">자세히</button><button type="button" id="v-compact" aria-pressed="false">간략히</button></div></div><div class="upd"><div id="updated">불러오는 중…</div><span id="visits" class="vpill" hidden></span></div><div id="counts"></div><div id="cinfo" class="cinfo" hidden></div></header>
+<link id="css" rel="stylesheet" href="style.css?v=12"></head><body>
+<header><div id="people" class="people"></div><nav id="modes" class="modes" hidden><button type="button" id="m-job" class="on" aria-pressed="true">💼 채용</button><button type="button" id="m-con" aria-pressed="false">🏆 대회</button><button type="button" id="m-side" aria-pressed="false" hidden>💰 부업</button></nav><div class="hd"><h1>채용 공고 보드</h1><div class="vt"><button type="button" id="v-full" aria-pressed="false">자세히</button><button type="button" id="v-compact" aria-pressed="false">간략히</button></div></div><div class="upd"><div id="updated">불러오는 중…</div><span id="visits" class="vpill" hidden></span></div><div id="counts"></div><div id="cinfo" class="cinfo" hidden></div></header>
 <nav id="tabs"><button type="button" id="t-open" class="on">진행 중</button><button type="button" id="t-arch">지난 공고</button></nav>
 <div id="filters">
 <input id="q" type="search" placeholder="회사·포지션·스택 검색">
@@ -12,7 +12,7 @@
 <select id="exp"><option value="">전체 경력</option></select>
 <select id="mystat"><option value="">전체 상태</option><option value="none">미분류</option></select></div>
 <label><input type="checkbox" id="ai"> 🤖 AI연동만</label><label><input type="checkbox" id="rec"> 👍 추천만 보기</label>
-</div><section id="top5"></section><main id="list"></main><main id="arch" hidden></main><section id="contest" hidden></section><script>
+</div><section id="top5"></section><main id="list"></main><main id="arch" hidden></main><section id="contest" hidden></section><section id="sidegig" hidden></section><script>
 (function(){var load=function(v){var c=document.getElementById('css');if(c.href.indexOf('v='+v)<0)c.href='style.css?v='+v;var s=document.createElement('script');s.src='app.js?v='+v;s.onload=function(){var t=document.createElement('script');t.src='contest.js?v='+v;document.body.appendChild(t)};document.body.appendChild(s)};
 fetch('version.json?t='+Date.now(),{cache:'no-store'}).then(function(r){return r.json()}).then(function(j){load(j.v||Date.now())}).catch(function(){load(Date.now())})})();
 </script><script data-goatcounter="https://henujobs.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script></body></html>

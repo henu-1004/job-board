@@ -82,6 +82,8 @@ GitHub Pages     정적 사이트 자동 배포 (빌드 단계 없음)
 `data/people.json`에서 `"contests": true`인 사람에게만 상단에 **💼 채용 / 🏆 대회** 전환 버튼이 보입니다 (선택은 사람별로 기억, `m=contest`로 URL 지정 가능). `"sidegigs": true`이면 **💰 부업** 버튼이 함께 열립니다.
 
 - 등급·분야·내 상태 필터, 검색, 마감 임박순 / 등급순 정렬, D-day 배지(오늘·내일 빨강, 2~3일 주황)
+- `recommended` 대회는 👍 추천 배지와 이유 한 줄, **👍 추천만 보기** 필터
+- 상단 **🔥 오늘 꼭 볼 TOP N** (`top5`가 있으면 그대로, 없으면 추천 → 등급 S>A>B → 마감 2일 이상 남은 것 중 가까운 순으로 최대 5건. 패스·제출함 제외). 접기 상태는 localStorage `contestboard-top`
 - 마감이 지난 대회는 진행 중 목록에서 자동으로 빠지고 **지난 대회** 탭에 표시 (`contests-archive.json`과 합쳐 월별로 묶음)
 - 내 상태 저장: 관심 / 참가함 / 제출함 / 패스 (localStorage `contest-status-<id>`)
 
@@ -102,9 +104,29 @@ GitHub Pages     정적 사이트 자동 배포 (빌드 단계 없음)
 | `eligibility` / `region_limit` | 참가 자격 / 지역 제한 (`없음`이면 그대로 표시) |
 | `grade` | `S` · `A` · `B` |
 | `reason` | 등급 이유 한 줄 |
+| `recommended` | `true`면 👍 추천 배지 (선택) |
+| `recommend_reason` | 추천 이유 한 줄. 배지 아래 👍 줄로 표시 (선택) |
 | `source` | 확인한 출처 |
 | `first_seen` | 처음 발견한 날 `YYYY-MM-DD` |
 | `new_today` | 이번 갱신에서 새로 추가됐으면 `true` (📌 신규) |
+
+
+최상위에 `top5` 배열이 있으면 대회 탭 TOP 섹션에 그대로 쓰고, 없으면 위에서 설명한 규칙으로 자동 계산합니다.
+
+```json
+{
+  "as_of": "2026-11-18T12:20+09:00",
+  "items": [ ... ],
+  "top5": [
+    { "id": "ksponco-data", "why": "공공데이터 웹·앱이라 백엔드 경험이 바로 쓰임" }
+  ]
+}
+```
+
+| 키 | 설명 |
+|---|---|
+| `id` | `items[].id` (또는 `link`/`url`로도 지정 가능) |
+| `why` | 추천 이유 한 줄 (생략 시 자동 생성) |
 
 **`data/<id>/contests-archive.json`**: `{"updated": "...", "items": [ ...위와 같은 필드 + "closed_at": "YYYY-MM-DD", "archive_reason": "마감" ]}` — 지난 대회 누적 보관(삭제 없음).
 

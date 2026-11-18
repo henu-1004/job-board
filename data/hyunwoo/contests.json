@@ -13,6 +13,8 @@
    "region_limit": "없음",
    "grade": "S",
    "reason": "트랙1은 아이디어만 내면 되고 마감까지 여유 있음",
+   "recommended": true,
+   "recommend_reason": "아이디어만 내면 되고 상금 1,000만원에 마감까지 한 달 여유",
    "source": "공식 사이트",
    "first_seen": "2026-11-18",
    "new_today": true
@@ -29,6 +31,8 @@
    "region_limit": "없음",
    "grade": "S",
    "reason": "포스터나 60초 숏폼(AI 가능)이라 퇴근 후 부담 적음",
+   "recommended": true,
+   "recommend_reason": "AI 숏폼·포스터라 퇴근 후에도 가능하고 마감이 3주 남음",
    "source": "충청남도 공모전",
    "first_seen": "2026-11-18",
    "new_today": true
@@ -77,6 +81,8 @@
    "region_limit": "없음",
    "grade": "S",
    "reason": "아이디어 제안이라 혼자 가능하고 마감이 두 달 남음",
+   "recommended": true,
+   "recommend_reason": "제안만 내면 되고 마감이 1월 중순이라 부담이 가장 적음",
    "source": "공식 사이트",
    "first_seen": "2026-11-18",
    "new_today": true
@@ -93,6 +99,8 @@
    "region_limit": "없음",
    "grade": "S",
    "reason": "개인 아이디어 제안이고 총상금이 큼",
+   "recommended": true,
+   "recommend_reason": "팀 없이 개인으로 내고 총상금 1,300만원으로 큼",
    "source": "충청남도 공모전",
    "first_seen": "2026-11-18",
    "new_today": true
@@ -109,6 +117,8 @@
    "region_limit": "없음",
    "grade": "S",
    "reason": "공공데이터로 웹·앱 만드는 거라 백엔드 경험 살리기 좋음",
+   "recommended": true,
+   "recommend_reason": "공공데이터 웹·앱이라 자바/스프링·사이드프로젝트 경험이 바로 쓰임",
    "source": "한국체육산업개발",
    "first_seen": "2026-11-18",
    "new_today": true
@@ -384,6 +394,28 @@
    "source": "공식 사이트",
    "first_seen": "2026-11-18",
    "new_today": true
+  }
+ ],
+ "top5": [
+  {
+   "id": "ksponco-data",
+   "why": "공공데이터 웹·앱이라 백엔드 경험이 바로 쓰임"
+  },
+  {
+   "id": "smartcity-ai",
+   "why": "아이디어만으로 가능하고 상금·기한 여유"
+  },
+  {
+   "id": "healing-cn",
+   "why": "개인 참가이고 총상금 1,300만원"
+  },
+  {
+   "id": "cn-police-traffic",
+   "why": "퇴근 후 숏폼·포스터로 가능, 마감 여유"
+  },
+  {
+   "id": "chest-idea",
+   "why": "혼자 가능하고 마감이 두 달 남음"
   }
  ]
 }

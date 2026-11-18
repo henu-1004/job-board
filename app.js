@@ -94,7 +94,7 @@ localStorage.setItem('jobboard-person',P);
 fetch('data/people.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).then(L=>{
  if(!L.some(x=>x.id===P)){P='hyunwoo';localStorage.setItem('jobboard-person',P);location.search='?p=hyunwoo';return}
  $('people').innerHTML=L.map(x=>`<button type="button" class="${x.id===P?'on':''}" aria-pressed="${x.id===P}" data-p="${esc(x.id)}">${esc(x.name)}</button>`).join('');
- document.title=(L.find(x=>x.id===P)||{}).name+' · 채용 공고 보드'}).catch(()=>{});
+ document.title=(L.find(x=>x.id===P)||{}).name+(window.MODE==='contest'?' · 대회 보드':' · 채용 공고 보드')}).catch(()=>{});
 $('people').addEventListener('click',e=>{const b=e.target.closest('button[data-p]');if(!b||b.dataset.p===P)return;localStorage.setItem('jobboard-person',b.dataset.p);const u=new URL(location.href);u.searchParams.set('p',b.dataset.p);location.href=u.toString()});
 
 (function(){const base='https://henujobs.goatcounter.com/counter/'+encodeURIComponent('/job-board/')+'.json',fmt=n=>Number(String(n).replace(/\D/g,'')||0).toLocaleString('ko-KR');

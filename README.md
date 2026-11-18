@@ -77,17 +77,51 @@ GitHub Pages     정적 사이트 자동 배포 (빌드 단계 없음)
 
 자동 계산: 마감·지원함·탈락·패스 공고 제외 → 등급(S 30 / A 20 / B 10) + 7일 내 마감(10−D) + 신규 5 + 🤖 3 점수 순 상위 5건.
 
+## 🏆 대회 탭 (`?p=hyunwoo&m=contest`)
+
+`data/people.json`에서 `"contests": true`인 사람에게만 상단에 **💼 채용 / 🏆 대회** 전환 버튼이 보입니다 (선택은 사람별로 기억, `m=contest`로 URL 지정 가능).
+
+- 등급·분야·내 상태 필터, 검색, 마감 임박순 / 등급순 정렬, D-day 배지(오늘·내일 빨강, 2~3일 주황)
+- 마감이 지난 대회는 진행 중 목록에서 자동으로 빠지고 **지난 대회** 탭에 표시 (`contests-archive.json`과 합쳐 월별로 묶음)
+- 내 상태 저장: 관심 / 참가함 / 제출함 / 패스 (localStorage `contest-status-<id>`)
+
+**`data/<id>/contests.json`**
+
+```json
+{ "as_of": "2026-11-18T12:20+09:00", "items": [ { "id": "smartcity-ai", "title": "...", "url": "https://...", "grade": "S", "deadline": "2026-12-14", ... } ] }
+```
+
+| 키 | 설명 |
+|---|---|
+| `id` | 고유 slug (영문 소문자·숫자·하이픈). 내 상태 저장 키 |
+| `title` / `url` | 대회명 / 공식 공고 링크 |
+| `host` | 주최·주관 (모르면 빈 문자열 → 표시 안 함) |
+| `category` | `IT·해커톤` · `창업·지원사업` · `지자체·기관 공모` · `디자인·영상` · `글쓰기·수기` · `음악` · `운동` · `기타` 중 하나 |
+| `deadline` | 접수 마감 `YYYY-MM-DD` (KST) |
+| `prize` | 상금·혜택 요약 |
+| `eligibility` / `region_limit` | 참가 자격 / 지역 제한 (`없음`이면 그대로 표시) |
+| `grade` | `S` · `A` · `B` |
+| `reason` | 등급 이유 한 줄 |
+| `source` | 확인한 출처 |
+| `first_seen` | 처음 발견한 날 `YYYY-MM-DD` |
+| `new_today` | 이번 갱신에서 새로 추가됐으면 `true` (📌 신규) |
+
+**`data/<id>/contests-archive.json`**: `{"updated": "...", "items": [ ...위와 같은 필드 + "closed_at": "YYYY-MM-DD", "archive_reason": "마감" ]}` — 지난 대회 누적 보관(삭제 없음).
+
 ## 📁 파일 구조
 
 ```
 job-board/
 ├── index.html        # 페이지 골격
 ├── app.js            # 데이터 로딩 · 정렬 · 필터 · 상태 저장
+├── contest.js        # 대회 탭 (contests:true인 사람만)
 ├── style.css         # 모바일 우선 스타일
 ├── version.json      # 캐시 무효화용 에셋 버전
 ├── data/people.json            # 사람 목록 [{id, name}]
 ├── data/<id>/jobs.json         # 사람별 진행 중 공고
 ├── data/<id>/archive.json      # 사람별 지난 공고 누적 보관 (closed_at, archive_reason)
+├── data/<id>/contests.json     # 진행 중 대회 (선택)
+├── data/<id>/contests-archive.json  # 지난 대회 누적 보관 (선택)
 └── docs/screenshot.png
 ```
 

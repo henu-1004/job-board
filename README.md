@@ -137,6 +137,7 @@ GitHub Pages     정적 사이트 자동 배포 (빌드 단계 없음)
 
 - 등급·플랫폼·내 상태 필터, 검색, 마감 임박순 / 등급순 정렬, D-day 배지(오늘·내일 빨강, 2~3일 주황)
 - 카드에는 등급, 플랫폼, 제목, 수입·기간, 추천 이유, 주의(겸업 등), 마감/D-day를 보여줍니다
+- 상단 **🔥 오늘 꼭 볼 TOP N** (`top5`가 있으면 그대로, 없으면 등급 S>A>B + 7일 내 마감 + 신규 점수 순으로 최대 5건. 패스·지원함 제외). 접기 상태는 localStorage `sidegigboard-top`
 - 마감이 지난 건은 진행 중 목록에서 자동으로 빠지고 **지난 부업** 탭에 표시 (`sidegigs-archive.json`과 합쳐 월별로 묶음)
 - 내 상태 저장: 관심 / 지원함 / 패스 (localStorage `sidegig-status-<id>`)
 
@@ -166,7 +167,24 @@ GitHub Pages     정적 사이트 자동 배포 (빌드 단계 없음)
 | `verify` | `1118 재확인: 열림` 형식 |
 | `change` | 보통 `null` |
 
-**`data/<id>/sidegigs-archive.json`**: `{"updated": "...", "items": [ ...위와 같은 필드 + "closed_at": "YYYY-MM-DD", "archive_reason": "마감" ]}` — 지난 부업 누적 보관(삭제 없음). 새 보고를 넣을 때는 `sidegigs.json`의 `as_of`를 `YYYY-MM-DDTHH:MM+09:00`(한국 시간)으로 바꾸고, 마감·제외 건은 archive로 옮긴다.
+최상위에 `top5` 배열이 있으면 부업 탭 TOP 섹션에 그대로 쓰고, 없으면 위에서 설명한 규칙으로 자동 계산합니다.
+
+```json
+{
+  "as_of": "2026-11-19T08:05+09:00",
+  "items": [ ... ],
+  "top5": [
+    { "id": "wishket-159660", "why": "재택 API 연동이라 저녁 며칠이면 끝나고 백엔드 포트폴리오에도 좋아. 마감 11/23." }
+  ]
+}
+```
+
+| 키 | 설명 |
+|---|---|
+| `id` | `items[].job_id` (또는 `link`/`url`로도 지정 가능) |
+| `why` | 추천 이유 한 줄 (생략 시 자동 생성) |
+
+**`data/<id>/sidegigs-archive.json`**: `{"updated": "...", "items": [ ...위와 같은 필드 + "closed_at": "YYYY-MM-DD", "archive_reason": "마감" ]}` — 지난 부업 누적 보관(삭제 없음). 새 보고를 넣을 때는 `sidegigs.json`의 `as_of`를 `YYYY-MM-DDTHH:MM+09:00`(한국 시간)으로 바꾸고, 마감·제외 건은 archive로 옮긴다. 추천 5개를 바꿀 때는 `top5`만 고치면 된다.
 
 ## 📁 파일 구조
 

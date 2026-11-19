@@ -61,7 +61,7 @@ function info(){const O=C.filter(j=>!j._closed),g=k=>O.filter(j=>j.grade===k).le
 
 const SST=['관심','지원함','패스'],SICON={'관심':'⭐','지원함':'📨','패스':'⏭️'};
 const SKEY='sidegig-status-'+P;let ss=JSON.parse(localStorage.getItem(SKEY)||'{}');
-let S=[],SA=null,stab='open',sasOf=null;const sbox=$('sidegig');
+let S=[],SA=null,stab='open',sasOf=null,STOPSRC=null,stopOpen=localStorage.getItem('sidegigboard-top')!=='0';const sbox=$('sidegig');
 function sn(j,i){const raw=j.deadline_now||j.deadline||'';const d=dday(raw);const plat=j.source||j.company||'';
  return{...j,_i:i,_id:j.job_id||j.id||j.url||('s'+i),_d:d,_g:({S:0,A:1,B:2}[j.grade]??3),_closed:(j.status&&j.status!=='open')||(d!==null&&d<0),
   _plat:plat,_sal:j.salary||'',_hay:[j.title,plat,j.company,j.reason,j.caution,j.salary,j.stack,j.desc,j['한줄설명']].join(' ').toLowerCase()}}
@@ -71,20 +71,38 @@ function sshell(){if(!sbox)return;sbox.innerHTML=`<nav class="ctabs"><button typ
 <select id="ssrc"><option value="">전체 플랫폼</option></select>
 <select id="sst"><option value="">전체 상태</option><option value="none">미분류</option>${SST.map(s=>`<option>${s}</option>`).join('')}</select>
 <select id="ssort"><option value="dl">마감 임박순</option><option value="grade">등급순</option></select></div></div>
+<section id="stop5"></section>
 <main id="slist"></main>`;
  [...new Set(S.map(j=>j._plat).filter(Boolean))].sort().forEach(p=>$('ssrc').add(new Option(p,p)));
  ['sgrade','ssrc','sst','ssort'].forEach(id=>$(id).addEventListener('input',srender));let t;$('sq').addEventListener('input',()=>{clearTimeout(t);t=setTimeout(srender,200)});
  sbox.querySelector('.ctabs').addEventListener('click',e=>{const b=e.target.closest('[data-st]');if(!b)return;stab=b.dataset.st;sbox.querySelectorAll('[data-st]').forEach(x=>x.classList.toggle('on',x===b));$('ssort').style.display=$('sst').style.display=stab==='arch'?'none':'';
   if(stab==='arch'&&!SA){$('slist').textContent='지난 부업 불러오는 중…';fetch('data/'+P+'/sidegigs-archive.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():{items:[]}).then(d=>{SA=(d.items||[]).map((j,i)=>({...sn(j,2e4+i),_ca:j.closed_at||'',_ar:j.archive_reason||''}));srender()}).catch(()=>{SA=[];srender()})}else srender()});
  $('slist').addEventListener('click',e=>{const b=e.target.closest('[data-ss]');if(!b)return;const c=e.target.closest('[data-si]');const j=S.find(x=>x._i===+c.dataset.si);if(!j)return;
-  const s=b.dataset.ss;if(ss[j._id]===s)delete ss[j._id];else ss[j._id]=s;localStorage.setItem(SKEY,JSON.stringify(ss));srender()})}
+  const s=b.dataset.ss;if(ss[j._id]===s)delete ss[j._id];else ss[j._id]=s;localStorage.setItem(SKEY,JSON.stringify(ss));srender()});
+ $('stop5').addEventListener('click',e=>{if(e.target.closest('.toph')){stopOpen=!stopOpen;localStorage.setItem('sidegigboard-top',stopOpen?'1':'0');renderSTop();return}
+  const row=e.target.closest('.ti5');if(!row||e.target.closest('a'))return;sgoTo(+row.dataset.si)})}
 function smatch(j){const q=$('sq').value.trim().toLowerCase(),g=$('sgrade').value,c=$('ssrc').value;return(!g||j.grade===g)&&(!c||j._plat===c)&&(!q||j._hay.includes(q))}
 function scard(j){const f=[['플랫폼',j._plat],['수입·기간',j._sal],['마감',j.deadline_now||j.deadline],['추천 이유',j.reason],['주의',j.caution]].filter(([k,v])=>v&&!MISS.test(String(v)));
  return `<div class="card" data-si="${j._i}"><div class="top"><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${dcls(j._d)}">${dl(j._d,j.deadline_now||j.deadline)}</span>${j._plat?'<span class="b cat">'+esc(j._plat)+'</span>':''}${j.new_today?'<span class="b new">📌 신규</span>':''}${ss[j._id]?'<span class="b">'+SICON[ss[j._id]]+' '+esc(ss[j._id])+'</span>':''}</div>
  <div class="ti"><a href="${esc(j.url)}" target="_blank" rel="noopener">${esc(j.title)} ↗</a></div>
  <dl>${f.map(([k,v])=>`<dt>${k}</dt><dd>${esc(v)}</dd>`).join('')}</dl>
  <div class="st">${SST.map(s=>`<button type="button" data-ss="${s}" class="${ss[j._id]===s?'on':''}">${s}</button>`).join('')}</div></div>`}
-function srender(){const el=$('slist');if(!el)return;
+function sautoWhy(j){const p=[j.grade+'급'];if(j._d!==null)p.push(j._d===0?'오늘 마감':j._d===1?'내일 마감':'D-'+j._d);if(j.new_today)p.push('신규');return p.join('·')}
+function stopList(){const ok=j=>!j._closed&&!['패스','지원함'].includes(ss[j._id]);
+ if(STOPSRC&&STOPSRC.length){const L=[];for(const t of STOPSRC){const k=t.link||t.url||t.id||t.job_id;const j=S.find(x=>x.url===k||x.link===k||x.job_id===k||x.id===k||x._id===k);if(j&&ok(j)&&!L.some(y=>y.j===j))L.push({j,why:t.why||sautoWhy(j)})}if(L.length)return L.slice(0,5)}
+ const sc=j=>({S:30,A:20,B:10}[j.grade]||0)+(j._d!==null&&j._d>=0&&j._d<=7?10-j._d:0)+(j.new_today?5:0);
+ return S.filter(ok).map(j=>({j,s:sc(j)})).sort((a,b)=>b.s-a.s||((a.j._d??1e4)-(b.j._d??1e4))).slice(0,5).map(x=>({j:x.j,why:sautoWhy(x.j)}))}
+function renderSTop(){const el=$('stop5');if(!el)return;if(stab==='arch'){el.hidden=true;el.innerHTML='';return}
+ const L=stopList();el.hidden=!L.length;if(!L.length){el.innerHTML='';return}
+ el.innerHTML=`<button type="button" class="toph">🔥 오늘 꼭 볼 TOP ${L.length} <span>${stopOpen?'접기 ▲':'펼치기 ▼'}</span></button>`+(stopOpen?L.map(({j,why},n)=>{const d=j._d;
+  return `<div class="ti5" data-si="${j._i}"><span class="rk">${n+1}</span><span class="b g-${esc(j.grade)}">${esc(j.grade)}</span><span class="b ${dcls(d)}">${dl(d,j.deadline_now||j.deadline)}</span>
+ <div class="rm"><div class="rt"><b>${esc(j.title)}</b>${j.new_today?' 📌':''}</div><div class="rs why">${esc(why)}</div></div>
+ <a class="rl" href="${esc(j.url)}" target="_blank" rel="noopener">↗</a></div>`}).join(''):'')}
+function sgoTo(i){const j=S.find(x=>x._i===i);if(!j)return;if(stab!=='open'){stab='open';sbox.querySelectorAll('[data-st]').forEach(x=>x.classList.toggle('on',x.dataset.st==='open'));$('ssort').style.display=$('sst').style.display='';srender()}
+ const vis=()=>$('slist').querySelector('[data-si="'+i+'"]');
+ if(!vis()){$('sq').value='';$('sgrade').value='';$('ssrc').value='';$('sst').value='';srender()}
+ const el=vis();if(el){el.style.contentVisibility='visible';el.scrollIntoView({block:'start'});requestAnimationFrame(()=>requestAnimationFrame(()=>el.scrollIntoView({block:'start'})));setTimeout(()=>{el.scrollIntoView({block:'start'});el.style.contentVisibility=''},350);el.classList.add('flash');setTimeout(()=>el.classList.remove('flash'),1500)}}
+function srender(){const el=$('slist');if(!el)return;renderSTop();
  if(stab==='arch'){if(!SA)return;const L=[...S.filter(j=>j._closed),...SA].filter(smatch);const G={};
   L.forEach(j=>{const m=String(j.deadline_now||j.deadline||j._ca).match(/(\d{4})-(\d{2})/);const k=m?`${m[1]}년 ${+m[2]}월`:'기한 미상';(G[k]=G[k]||[]).push(j)});const ks=Object.keys(G).sort().reverse();
   el.innerHTML=`<p class="ainfo">지난 부업 ${L.length}건 (마감 지난 건은 자동으로 여기로 옮겨져요)</p>`+(ks.length?ks.map(k=>`<h3 class="mon">${k} <small>${G[k].length}건</small></h3>`+G[k].sort((a,b)=>String(b.deadline||'').localeCompare(String(a.deadline||''))).map(j=>
@@ -112,7 +130,7 @@ fetch('data/people.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.json()).the
  if(!hasContests&&!hasSidegigs)return Promise.reject('no extra modes');
  const tasks=[];
  if(hasContests)tasks.push(fetch('data/'+P+'/contests.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{asOf=d.as_of||null;C=(d.items||[]).map(cn);CTOPSRC=Array.isArray(d.top5)?d.top5:null;return 'c'}).catch(()=>{hasContests=false;C=[];CTOPSRC=null;return null}));
- if(hasSidegigs)tasks.push(fetch('data/'+P+'/sidegigs.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{sasOf=d.as_of||null;S=(d.items||[]).map(sn);return 's'}).catch(()=>{hasSidegigs=false;S=[];return null}));
+ if(hasSidegigs)tasks.push(fetch('data/'+P+'/sidegigs.json?t='+Date.now(),{cache:'no-store'}).then(r=>r.ok?r.json():Promise.reject(r.status)).then(d=>{sasOf=d.as_of||null;S=(d.items||[]).map(sn);STOPSRC=Array.isArray(d.top5)?d.top5:null;return 's'}).catch(()=>{hasSidegigs=false;S=[];STOPSRC=null;return null}));
  return Promise.all(tasks)}).then(()=>{
  if(!hasContests&&!hasSidegigs)return;
  if(hasContests){shell();info()}

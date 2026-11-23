@@ -1,4 +1,59 @@
 {
- "updated": "2026-11-19",
- "items": []
+ "updated": "2026-11-23",
+ "items": [
+  {
+   "id": "pps-aigame",
+   "title": "조달청 AI 게임·콘텐츠 공모전",
+   "url": "https://blog.naver.com/ppspr/224439199284",
+   "host": "조달청",
+   "category": "디자인·영상",
+   "deadline": "2026-11-22",
+   "prize": "대상 200만원",
+   "eligibility": "누구나",
+   "region_limit": "없음",
+   "grade": "A",
+   "reason": "마감까지 며칠 안 남음",
+   "source": "조달청 블로그",
+   "first_seen": "2026-11-18",
+   "new_today": false,
+   "closed_at": "2026-11-23",
+   "archive_reason": "마감"
+  },
+  {
+   "id": "mogef-benchmark",
+   "title": "성평등 AI 벤치마크 챌린지",
+   "url": "https://www.mogefdatacontest.co.kr/info.jsp",
+   "host": "",
+   "category": "IT·해커톤",
+   "deadline": "2026-11-20",
+   "prize": "최우수 150만원",
+   "eligibility": "누구나",
+   "region_limit": "없음",
+   "grade": "A",
+   "reason": "문항 250개 정도 분석이 필요한데 마감이 코앞",
+   "source": "공식 사이트",
+   "first_seen": "2026-11-18",
+   "new_today": false,
+   "closed_at": "2026-11-23",
+   "archive_reason": "마감"
+  },
+  {
+   "id": "cb-commerce",
+   "title": "충북 상권 혁신 경진대회",
+   "url": "https://xn--v27b23b.life/",
+   "host": "",
+   "category": "창업·지원사업",
+   "deadline": "2026-11-20",
+   "prize": "1등 250만원",
+   "eligibility": "충북 자원 활용 아이템",
+   "region_limit": "충북 자원 활용 시 타지역 가능",
+   "grade": "A",
+   "reason": "충북 자원을 쓰는 아이템이어야 하고 마감이 코앞",
+   "source": "공식 사이트",
+   "first_seen": "2026-11-18",
+   "new_today": false,
+   "closed_at": "2026-11-23",
+   "archive_reason": "마감"
+  }
+ ]
 }

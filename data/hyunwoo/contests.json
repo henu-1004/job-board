@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-19T09:30+09:00",
+ "as_of": "2026-11-23T09:21+09:00",
  "items": [
   {
    "id": "smartcity-ai",
@@ -17,7 +17,7 @@
    "first_seen": "2026-11-18",
    "new_today": false,
    "recommended": true,
-   "recommend_reason": "아이디어만 내면 되고 상금 1,000만원, 마감 12/14"
+   "recommend_reason": "아이디어만 내면 되고 마감 12/14"
   },
   {
    "id": "cn-police-traffic",
@@ -113,9 +113,7 @@
    "reason": "공공데이터로 웹·앱 만드는 거라 백엔드 경험 살리기 좋음",
    "source": "한국체육산업개발",
    "first_seen": "2026-11-18",
-   "new_today": false,
-   "recommended": true,
-   "recommend_reason": "공공데이터 웹·앱이라 백엔드 경험이 바로 쓰임"
+   "new_today": false
   },
   {
    "id": "codegeist-2026",
@@ -178,54 +176,6 @@
    "grade": "A",
    "reason": "AI 영상을 제대로 만들어야 하고 마감이 가까움",
    "source": "광명시",
-   "first_seen": "2026-11-18",
-   "new_today": false
-  },
-  {
-   "id": "pps-aigame",
-   "title": "조달청 AI 게임·콘텐츠 공모전",
-   "url": "https://blog.naver.com/ppspr/224439199284",
-   "host": "조달청",
-   "category": "디자인·영상",
-   "deadline": "2026-11-22",
-   "prize": "대상 200만원",
-   "eligibility": "누구나",
-   "region_limit": "없음",
-   "grade": "A",
-   "reason": "마감까지 며칠 안 남음",
-   "source": "조달청 블로그",
-   "first_seen": "2026-11-18",
-   "new_today": false
-  },
-  {
-   "id": "mogef-benchmark",
-   "title": "성평등 AI 벤치마크 챌린지",
-   "url": "https://www.mogefdatacontest.co.kr/info.jsp",
-   "host": "",
-   "category": "IT·해커톤",
-   "deadline": "2026-11-20",
-   "prize": "최우수 150만원",
-   "eligibility": "누구나",
-   "region_limit": "없음",
-   "grade": "A",
-   "reason": "문항 250개 정도 분석이 필요한데 마감이 코앞",
-   "source": "공식 사이트",
-   "first_seen": "2026-11-18",
-   "new_today": false
-  },
-  {
-   "id": "cb-commerce",
-   "title": "충북 상권 혁신 경진대회",
-   "url": "https://xn--v27b23b.life/",
-   "host": "",
-   "category": "창업·지원사업",
-   "deadline": "2026-11-20",
-   "prize": "1등 250만원",
-   "eligibility": "충북 자원 활용 아이템",
-   "region_limit": "충북 자원 활용 시 타지역 가능",
-   "grade": "A",
-   "reason": "충북 자원을 쓰는 아이템이어야 하고 마감이 코앞",
-   "source": "공식 사이트",
    "first_seen": "2026-11-18",
    "new_today": false
   },
@@ -403,9 +353,7 @@
    "reason": "온라인이고 혼자 해도 되고 상금도 커. 마감은 12/4 14:00 PT, 한국시간 12/5 07:00",
    "source": "devpost.com 공식 페이지 직접 확인(참가 자격·마감·상금)",
    "first_seen": "2026-11-19",
-   "new_today": true,
-   "recommended": true,
-   "recommend_reason": "혼자 온라인, 상금 $100k+에 AI 에이전트 사이드 프로젝트로 좋음"
+   "new_today": false
   },
   {
    "id": "firebase-buildhybridai",
@@ -421,7 +369,7 @@
    "reason": "기존 앱 개조해도 돼서 부담 적어. 마감 11/30 14:00 PT, 한국시간 12/1 07:00",
    "source": "devpost.com 공식 페이지 직접 확인",
    "first_seen": "2026-11-19",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "cloud9-jetbrains-2026",
@@ -437,9 +385,9 @@
    "reason": "마감이 1월 중순이라 퇴근 후 천천히 하기 좋아. 마감 1/12 11:00 PT, 한국시간 1/13 04:00",
    "source": "devpost.com 공식 페이지 직접 확인",
    "first_seen": "2026-11-19",
-   "new_today": true,
+   "new_today": false,
    "recommended": true,
-   "recommend_reason": "IntelliJ·Java로 e스포츠 데이터 백엔드 툴 만들기 좋고 마감이 1월 중순"
+   "recommend_reason": "IntelliJ·Java로 e스포츠 데이터 툴, 마감 1월 중순"
   },
   {
    "id": "cognizant-open-agentic-web",
@@ -455,9 +403,9 @@
    "reason": "에이전트 웹 오픈소스 만들면 되고 기간 넉넉해. 마감 1/11 16:00 UTC, 한국시간 1/12 01:00",
    "source": "devpost.com 공식 페이지 직접 확인",
    "first_seen": "2026-11-19",
-   "new_today": true,
+   "new_today": false,
    "recommended": true,
-   "recommend_reason": "에이전트 웹 백엔드·프로토콜 성격이라 Spring 포트폴리오로 딱"
+   "recommend_reason": "에이전트 웹 백엔드 성격이라 Spring 포트폴리오로 딱"
   },
   {
    "id": "reddit-daily-game-2026",
@@ -473,7 +421,7 @@
    "reason": "혼자 가능한 온라인 게임 해커톤. 마감 12/8 18:00 PT, 한국시간 12/9 11:00",
    "source": "devpost.com 공식 페이지 직접 확인",
    "first_seen": "2026-11-19",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "seoul-night-hackathon",
@@ -489,7 +437,7 @@
    "reason": "직장인도 되지만 39세 이하·5인 팀·무박 2일 본선이라 부담 있음",
    "source": "서울시 내 손안에 서울 공식 기사 직접 확인(접수는 스타트업플러스)",
    "first_seen": "2026-11-19",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "rural-startup-2027",
@@ -505,7 +453,7 @@
    "reason": "예비창업자도 되지만 농촌 기반 사업 아이템이 있어야 의미 있어",
    "source": "K-Startup 공고 상세(pbancSn=179829) 직접 확인",
    "first_seen": "2026-11-19",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "songpa-ict-center-2027",
@@ -521,7 +469,7 @@
    "reason": "ICT 예비창업자면 싸게 사무실 쓰는 지원사업인데, 사업자 내야 해서 각오 필요해",
    "source": "K-Startup 공고 상세(pbancSn=179824) 직접 확인",
    "first_seen": "2026-11-19",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "guri-policy-idea-2026",
@@ -537,7 +485,7 @@
    "reason": "지정 서식 제안서 1건이면 끝나는데 마감이 6일 남았어",
    "source": "구리시청 고시/공고(구리시 공고 제2026-1766호) 직접 확인. 접수는 국민생각함·이메일·우편",
    "first_seen": "2026-11-19",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "vivid-replay-ai-video",
@@ -553,7 +501,7 @@
    "reason": "혼자 AI 툴로 만들면 되고 마감까지 3주 넘게 남았어",
    "source": "vivid.ing/contest 공식 페이지 직접 확인(진행 중, D-24) + 인크루트 공모전 상세",
    "first_seen": "2026-11-19",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "sff-character-2026",
@@ -569,7 +517,7 @@
    "reason": "누구나 되고 혼자 가능, 마감 11일 남았어",
    "source": "sffcharacter.kr 공식 접수 페이지 + 내 손안에 서울 공모 게시(2000792) 직접 확인",
    "first_seen": "2026-11-19",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "maeil-sinchun-2027",
@@ -585,7 +533,7 @@
    "reason": "수필 부문도 있어서 일반인도 도전할 만해. 우편 도착 기준이라 며칠 일찍 부쳐야 해",
    "source": "매일신문 공식 사고(imaeil.com) 직접 확인",
    "first_seen": "2026-11-19",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "kwangseok-again-2027",
@@ -601,7 +549,7 @@
    "reason": "누구나 되지만 창작곡 필요하고 본선이 오프라인이야",
    "source": "뉴시스 보도(추모사업회 발표, 2026-11-18) 확인. 별도 공식 공고 페이지는 못 찾음",
    "first_seen": "2026-11-19",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "yonhap-hanam-trailrun-2026",
@@ -617,29 +565,241 @@
    "reason": "선착순이라 빨리 마감될 수 있어. 주최 공고는 11/27까지인데 런레이더엔 11/26이라 보수적으로 잡았어",
    "source": "연합뉴스(주최사) 공고 기사 + 런레이더 확인. 공식 홈페이지 yhitf.co.kr은 접속 차단(403)으로 직접 확인 못 함",
    "first_seen": "2026-11-19",
+   "new_today": false
+  },
+  {
+   "id": "sjcu-ai-bulssi-2026",
+   "title": "세종사이버대 전 국민 AI 공모전 'AI 불씨'",
+   "url": "https://www.sjcu.ac.kr/aispark/main/index.asp",
+   "host": "세종사이버대학교",
+   "category": "IT·해커톤",
+   "deadline": "2026-12-20",
+   "prize": "총 1,500만원, 트랙별 대상 200만원",
+   "eligibility": "국내 거주자 누구나(개인·팀)",
+   "region_limit": "없음(국내 거주)",
+   "grade": "S",
+   "reason": "트랙2는 내가 만든 AI 자동화·웹앱을 3분 영상으로 소개하면 돼서 사이드 프로젝트 재활용 가능",
+   "source": "씽유·공식 사이트",
+   "first_seen": "2026-11-23",
+   "new_today": true,
+   "recommended": true,
+   "recommend_reason": "트랙2는 만든 AI 웹앱·자동화를 3분 영상으로 소개, 대상 200만원"
+  },
+  {
+   "id": "relate-neo4j-2026",
+   "title": "Relate by Neo4j Hackathon",
+   "url": "https://relate.devpost.com/",
+   "host": "Neo4j",
+   "category": "IT·해커톤",
+   "deadline": "2026-12-12",
+   "prize": "비현금 상품 3개",
+   "eligibility": "성인, 개인 참가(팀원 협업 가능)",
+   "region_limit": "없음",
+   "grade": "S",
+   "reason": "기존 프로젝트 확장도 인정, 그래프 DB를 백엔드에 붙이는 포트폴리오로 좋음(마감 12/11 PST)",
+   "source": "Devpost",
+   "first_seen": "2026-11-23",
+   "new_today": true,
+   "recommended": true,
+   "recommend_reason": "기존 사이드 프로젝트에 그래프 DB 붙여 내도 됨, 혼자 온라인"
+  },
+  {
+   "id": "deck-the-pixels-2026",
+   "title": "Deck the Pixels (Google·Adobe Nano Banana)",
+   "url": "https://deckthepixels.devpost.com/",
+   "host": "Google",
+   "category": "디자인·영상",
+   "deadline": "2026-12-08",
+   "prize": "총 $25,000 (1등 $8,000)",
+   "eligibility": "성인, 한국 참가 가능",
+   "region_limit": "없음",
+   "grade": "S",
+   "reason": "코딩 없이 포토샵으로 어글리 스웨터·카드 2장이면 끝, 퇴근 후 한두 번이면 가능(마감 12/7 EST)",
+   "source": "Devpost",
+   "first_seen": "2026-11-23",
+   "new_today": true
+  },
+  {
+   "id": "kkenoni-cmsong-2026",
+   "title": "종근당 깨노니 CM송 가요제",
+   "url": "https://linkareer.com/activity/365606",
+   "host": "종근당",
+   "category": "음악",
+   "deadline": "2026-12-08",
+   "prize": "총 1,260만원 상당 (대상 500만원)",
+   "eligibility": "만 19세 이상 누구나, 개인 또는 3인 팀",
+   "region_limit": "없음",
+   "grade": "S",
+   "reason": "CM송 편곡·AI 활용 20~40초 숏폼이라 혼자 가능",
+   "source": "링커리어·씽유",
+   "first_seen": "2026-11-23",
+   "new_today": true
+  },
+  {
+   "id": "qnx-global-2026",
+   "title": "QNX Global Hackathon",
+   "url": "https://qnx.devpost.com/",
+   "host": "QNX",
+   "category": "IT·해커톤",
+   "deadline": "2026-12-16",
+   "prize": "총 $50,000",
+   "eligibility": "만 18세 이상 개인·팀·조직",
+   "region_limit": "없음(제재국 제외)",
+   "grade": "A",
+   "reason": "상금 크고 QEMU로 가능하지만 실시간 OS·C 쪽이라 Spring과 거리 있음(마감 12/15 EST)",
+   "source": "Devpost",
+   "first_seen": "2026-11-23",
+   "new_today": true
+  },
+  {
+   "id": "wisdomhouse-fantasy-2026",
+   "title": "제5회 위즈덤하우스 어린이청소년 판타지문학상",
+   "url": "https://www.wisdomhouse.co.kr/contest/info/8",
+   "host": "위즈덤하우스",
+   "category": "글쓰기·수기",
+   "deadline": "2026-12-20",
+   "prize": "부문별 대상 2,000만원·우수 500만원, 단행본 출간",
+   "eligibility": "성인 누구나",
+   "region_limit": "없음",
+   "grade": "A",
+   "reason": "상금 크지만 미발표 장편 판타지 원고가 필요해서 부담 큼",
+   "source": "씽유",
+   "first_seen": "2026-11-23",
+   "new_today": true
+  },
+  {
+   "id": "nhis-reboom-2026",
+   "title": "건강보험을 RE:BOOM 하라! 공모전",
+   "url": "https://www.nhis-contest2026.co.kr/info.asp",
+   "host": "국민건강보험공단",
+   "category": "지자체·기관 공모",
+   "deadline": "2026-12-04",
+   "prize": "총 840만원 (대상 300만원)",
+   "eligibility": "국민 누구나, 개인 또는 4인 팀",
+   "region_limit": "없음(2차 PT는 원주 본부)",
+   "grade": "A",
+   "reason": "브랜드·홍보 아이디어 PPT 10장이라 가볍지만 2차 PT가 원주 오프라인",
+   "source": "공식 사이트",
+   "first_seen": "2026-11-23",
+   "new_today": true
+  },
+  {
+   "id": "onewindow-idea-2026",
+   "title": "2026 통합데이터플랫폼(원-윈도우) 활용 아이디어 기획 공모전",
+   "url": "https://thinkyou.co.kr/contest/68218/",
+   "host": "과학기술정보통신부·NIA",
+   "category": "IT·해커톤",
+   "deadline": "2026-11-30",
+   "prize": "공모요강 확인",
+   "eligibility": "대한민국 국민 누구나, 개인 참가",
+   "region_limit": "없음",
+   "grade": "A",
+   "reason": "데이터 결합 서비스 기획이라 백엔드 감각 살리기 좋지만 마감 일주일",
+   "source": "씽유",
+   "first_seen": "2026-11-23",
+   "new_today": true
+  },
+  {
+   "id": "nitto-noic-2026",
+   "title": "제2회 Nitto Open Innovation Challenge",
+   "url": "https://blog.naver.com/nitto_official/224458090500",
+   "host": "Nitto",
+   "category": "기타",
+   "deadline": "2026-11-30",
+   "prize": "부문별 1등 300만원/200만원 외",
+   "eligibility": "누구나, 최대 3인 팀",
+   "region_limit": "없음",
+   "grade": "A",
+   "reason": "워드 양식 아이디어 제안이라 가볍지만 마감 일주일",
+   "source": "씽유·공식 블로그",
+   "first_seen": "2026-11-23",
+   "new_today": true
+  },
+  {
+   "id": "seoul-intro-shortform-2026",
+   "title": "2026 내가 소개하는 서울 숏폼 공모전",
+   "url": "https://mediahub.seoul.go.kr/gongmo/2000791",
+   "host": "서울특별시",
+   "category": "디자인·영상",
+   "deadline": "2026-11-27",
+   "prize": "대상 300만원, 최우수 150만원 등 11명",
+   "eligibility": "국내 거주 내외국인 누구나",
+   "region_limit": "없음",
+   "grade": "A",
+   "reason": "60초 숏폼, AI 활용 가능하지만 마감 4일",
+   "source": "씽유·서울시",
+   "first_seen": "2026-11-23",
+   "new_today": true
+  },
+  {
+   "id": "amt-ai-music-2026",
+   "title": "제3회 AMT AI 작곡대회 – KILLING DANCE 챌린지",
+   "url": "https://www.aimusictown.com/",
+   "host": "프롬프트뱅크",
+   "category": "음악",
+   "deadline": "2026-12-13",
+   "prize": "총 59만원 상품권 (1위 30만원)",
+   "eligibility": "AMT 회원 누구나",
+   "region_limit": "없음",
+   "grade": "B",
+   "reason": "AI로 댄스곡 하나 올리면 끝이라 쉽지만 상금 작음",
+   "source": "씽유",
+   "first_seen": "2026-11-23",
+   "new_today": true
+  },
+  {
+   "id": "daum-ai-shortdrama-2026",
+   "title": "다음 제1회 AI 숏드라마 시나리오 공모전",
+   "url": "https://thinkyou.co.kr/contest/67984/",
+   "host": "다음",
+   "category": "글쓰기·수기",
+   "deadline": "2026-11-26",
+   "prize": "최대 20편, 편당 100만원",
+   "eligibility": "만 19세 이상 국내 거주 개인(팀 불가)",
+   "region_limit": "없음(국내 거주)",
+   "grade": "B",
+   "reason": "15부작 시나리오가 필요하고 마감 3일, 써둔 원고 있으면만",
+   "source": "씽유",
+   "first_seen": "2026-11-23",
+   "new_today": true
+  },
+  {
+   "id": "powerrun-marathon-2026",
+   "title": "제3회 긍정의 힘 마라톤 (12/12 서울 신정교)",
+   "url": "https://powerrun.kr/info/",
+   "host": "한국유튜브방송협회",
+   "category": "운동",
+   "deadline": "2026-12-02",
+   "prize": "참가비 5만원 (5K·10K·하프)",
+   "eligibility": "누구나",
+   "region_limit": "없음(서울 영등포 개최)",
+   "grade": "B",
+   "reason": "연말 러닝 하나 뛰고 싶으면, 조기 마감 가능",
+   "source": "공식 사이트",
+   "first_seen": "2026-11-23",
    "new_today": true
   }
  ],
  "top5": [
   {
+   "id": "sjcu-ai-bulssi-2026",
+   "why": "트랙2는 만든 AI 웹앱·자동화를 3분 영상으로 소개, 대상 200만원"
+  },
+  {
+   "id": "relate-neo4j-2026",
+   "why": "기존 사이드 프로젝트에 그래프 DB 붙여 내도 됨, 혼자 온라인"
+  },
+  {
    "id": "cloud9-jetbrains-2026",
-   "why": "IntelliJ·Java로 e스포츠 데이터 백엔드 툴 만들기 좋고 마감이 1월 중순"
+   "why": "IntelliJ·Java로 e스포츠 데이터 툴, 마감 1월 중순"
   },
   {
    "id": "cognizant-open-agentic-web",
-   "why": "에이전트 웹 백엔드·프로토콜 성격이라 Spring 포트폴리오로 딱"
-  },
-  {
-   "id": "kiroween-2026",
-   "why": "혼자 온라인, 상금 $100k+에 AI 에이전트 사이드 프로젝트로 좋음"
+   "why": "에이전트 웹 백엔드 성격이라 Spring 포트폴리오로 딱"
   },
   {
    "id": "smartcity-ai",
-   "why": "아이디어만 내면 되고 상금 1,000만원, 마감 12/14"
-  },
-  {
-   "id": "ksponco-data",
-   "why": "공공데이터 웹·앱이라 백엔드 경험이 바로 쓰임"
+   "why": "아이디어만 내면 되고 마감 12/14"
   }
  ]
 }

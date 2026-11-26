@@ -1,5 +1,5 @@
 {
- "as_of": "2026-11-23T09:21+09:00",
+ "as_of": "2026-11-26T09:21+09:00",
  "items": [
   {
    "id": "smartcity-ai",
@@ -15,9 +15,7 @@
    "reason": "트랙1은 아이디어만 내면 되고 마감까지 여유 있음",
    "source": "공식 사이트",
    "first_seen": "2026-11-18",
-   "new_today": false,
-   "recommended": true,
-   "recommend_reason": "아이디어만 내면 되고 마감 12/14"
+   "new_today": false
   },
   {
    "id": "cn-police-traffic",
@@ -164,22 +162,6 @@
    "new_today": false
   },
   {
-   "id": "gm-ktx-aivideo",
-   "title": "KTX광명역 미래비전 AI영상 공모전",
-   "url": "https://www.gm.go.kr/pt/user/nftcBbs/BD_selectNftcBbsDetail.do?q_nftcBbsCode=1001&q_nftcBbsMgtno=68755",
-   "host": "광명시",
-   "category": "디자인·영상",
-   "deadline": "2026-11-24",
-   "prize": "1등 200만원",
-   "eligibility": "누구나",
-   "region_limit": "없음",
-   "grade": "A",
-   "reason": "AI 영상을 제대로 만들어야 하고 마감이 가까움",
-   "source": "광명시",
-   "first_seen": "2026-11-18",
-   "new_today": false
-  },
-  {
    "id": "nongmin-sinchun",
    "title": "농민신문 신춘문예",
    "url": "https://www.nongmin.com/article/20261102500603",
@@ -256,38 +238,6 @@
    "grade": "A",
    "reason": "수기 한 편이지만 경험 기반 글이 필요",
    "source": "공식 공지",
-   "first_seen": "2026-11-18",
-   "new_today": false
-  },
-  {
-   "id": "gn-startup-bus",
-   "title": "경남창조경제혁신센터 창업-BuS",
-   "url": "https://www.venturesquare.net/announcement/1058441",
-   "host": "경남창조경제혁신센터",
-   "category": "창업·지원사업",
-   "deadline": "2026-11-23",
-   "prize": "액셀러레이팅·투자 연계",
-   "eligibility": "예비창업자 가능",
-   "region_limit": "없음",
-   "grade": "A",
-   "reason": "창업 아이템이 있어야 하고 마감이 가까움",
-   "source": "벤처스퀘어",
-   "first_seen": "2026-11-18",
-   "new_today": false
-  },
-  {
-   "id": "bipa-musictelling",
-   "title": "뮤직텔링 부산 공모전",
-   "url": "https://www.bipa.kr/board/business/view?seq=85481",
-   "host": "부산정보산업진흥원",
-   "category": "음악",
-   "deadline": "2026-11-23",
-   "prize": "대상 400만원",
-   "eligibility": "누구나",
-   "region_limit": "없음",
-   "grade": "A",
-   "reason": "AI 써도 되지만 노래는 사람이 불러야 하고 마감 임박",
-   "source": "부산정보산업진흥원",
    "first_seen": "2026-11-18",
    "new_today": false
   },
@@ -385,9 +335,7 @@
    "reason": "마감이 1월 중순이라 퇴근 후 천천히 하기 좋아. 마감 1/12 11:00 PT, 한국시간 1/13 04:00",
    "source": "devpost.com 공식 페이지 직접 확인",
    "first_seen": "2026-11-19",
-   "new_today": false,
-   "recommended": true,
-   "recommend_reason": "IntelliJ·Java로 e스포츠 데이터 툴, 마감 1월 중순"
+   "new_today": false
   },
   {
    "id": "cognizant-open-agentic-web",
@@ -468,22 +416,6 @@
    "grade": "B",
    "reason": "ICT 예비창업자면 싸게 사무실 쓰는 지원사업인데, 사업자 내야 해서 각오 필요해",
    "source": "K-Startup 공고 상세(pbancSn=179824) 직접 확인",
-   "first_seen": "2026-11-19",
-   "new_today": false
-  },
-  {
-   "id": "guri-policy-idea-2026",
-   "title": "2026년 제2회 구리시 정책제안 공모전",
-   "url": "https://www.guri.go.kr/www/selectGosiNttView.do?gosiNttNo=49204&key=387&pageIndex=1&pageUnit=10&searchCnd=all&searchDeptNm=&searchGosiSe=01%2C04%2C06",
-   "host": "구리시",
-   "category": "지자체·기관 공모",
-   "deadline": "2026-11-25",
-   "prize": "금상 200만 원, 은상 100만 원, 동상 50만 원, 장려 30만 원, 노력상 10만 원",
-   "eligibility": "구리 시정에 관심 있는 누구나, 1인 1건 (공동 제안 가능)",
-   "region_limit": "없음 (공고에 '지역 제한 없음' 명시)",
-   "grade": "A",
-   "reason": "지정 서식 제안서 1건이면 끝나는데 마감이 6일 남았어",
-   "source": "구리시청 고시/공고(구리시 공고 제2026-1766호) 직접 확인. 접수는 국민생각함·이메일·우편",
    "first_seen": "2026-11-19",
    "new_today": false
   },
@@ -581,9 +513,9 @@
    "reason": "트랙2는 내가 만든 AI 자동화·웹앱을 3분 영상으로 소개하면 돼서 사이드 프로젝트 재활용 가능",
    "source": "씽유·공식 사이트",
    "first_seen": "2026-11-23",
-   "new_today": true,
+   "new_today": false,
    "recommended": true,
-   "recommend_reason": "트랙2는 만든 AI 웹앱·자동화를 3분 영상으로 소개, 대상 200만원"
+   "recommend_reason": "만든 AI 웹앱·자동화를 3분 영상으로 소개, 마감 12/20"
   },
   {
    "id": "relate-neo4j-2026",
@@ -599,9 +531,7 @@
    "reason": "기존 프로젝트 확장도 인정, 그래프 DB를 백엔드에 붙이는 포트폴리오로 좋음(마감 12/11 PST)",
    "source": "Devpost",
    "first_seen": "2026-11-23",
-   "new_today": true,
-   "recommended": true,
-   "recommend_reason": "기존 사이드 프로젝트에 그래프 DB 붙여 내도 됨, 혼자 온라인"
+   "new_today": false
   },
   {
    "id": "deck-the-pixels-2026",
@@ -617,7 +547,7 @@
    "reason": "코딩 없이 포토샵으로 어글리 스웨터·카드 2장이면 끝, 퇴근 후 한두 번이면 가능(마감 12/7 EST)",
    "source": "Devpost",
    "first_seen": "2026-11-23",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "kkenoni-cmsong-2026",
@@ -633,7 +563,7 @@
    "reason": "CM송 편곡·AI 활용 20~40초 숏폼이라 혼자 가능",
    "source": "링커리어·씽유",
    "first_seen": "2026-11-23",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "qnx-global-2026",
@@ -649,7 +579,7 @@
    "reason": "상금 크고 QEMU로 가능하지만 실시간 OS·C 쪽이라 Spring과 거리 있음(마감 12/15 EST)",
    "source": "Devpost",
    "first_seen": "2026-11-23",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "wisdomhouse-fantasy-2026",
@@ -665,7 +595,7 @@
    "reason": "상금 크지만 미발표 장편 판타지 원고가 필요해서 부담 큼",
    "source": "씽유",
    "first_seen": "2026-11-23",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "nhis-reboom-2026",
@@ -681,7 +611,7 @@
    "reason": "브랜드·홍보 아이디어 PPT 10장이라 가볍지만 2차 PT가 원주 오프라인",
    "source": "공식 사이트",
    "first_seen": "2026-11-23",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "onewindow-idea-2026",
@@ -697,7 +627,7 @@
    "reason": "데이터 결합 서비스 기획이라 백엔드 감각 살리기 좋지만 마감 일주일",
    "source": "씽유",
    "first_seen": "2026-11-23",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "nitto-noic-2026",
@@ -713,7 +643,7 @@
    "reason": "워드 양식 아이디어 제안이라 가볍지만 마감 일주일",
    "source": "씽유·공식 블로그",
    "first_seen": "2026-11-23",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "seoul-intro-shortform-2026",
@@ -729,7 +659,7 @@
    "reason": "60초 숏폼, AI 활용 가능하지만 마감 4일",
    "source": "씽유·서울시",
    "first_seen": "2026-11-23",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "amt-ai-music-2026",
@@ -745,7 +675,7 @@
    "reason": "AI로 댄스곡 하나 올리면 끝이라 쉽지만 상금 작음",
    "source": "씽유",
    "first_seen": "2026-11-23",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "daum-ai-shortdrama-2026",
@@ -761,7 +691,7 @@
    "reason": "15부작 시나리오가 필요하고 마감 3일, 써둔 원고 있으면만",
    "source": "씽유",
    "first_seen": "2026-11-23",
-   "new_today": true
+   "new_today": false
   },
   {
    "id": "powerrun-marathon-2026",
@@ -777,29 +707,195 @@
    "reason": "연말 러닝 하나 뛰고 싶으면, 조기 마감 가능",
    "source": "공식 사이트",
    "first_seen": "2026-11-23",
+   "new_today": false
+  },
+  {
+   "id": "kalis-ai-idea-2026",
+   "title": "국토안전관리원 AI·공공데이터·정보공개 아이디어 공모전",
+   "url": "https://bigtori.kalis.or.kr/contest/ai-idea-contest",
+   "host": "국토안전관리원",
+   "category": "지자체·기관 공모",
+   "deadline": "2026-12-10",
+   "prize": "부문별 최우수 20만원·우수 10만원",
+   "eligibility": "대한민국 국민 누구나(임직원 제외)",
+   "region_limit": "없음",
+   "grade": "S",
+   "reason": "아이디어 1건 온라인 제출, AX 방안 부문이라 업무 경험 살리기 좋음",
+   "source": "공식 사이트",
+   "first_seen": "2026-11-26",
+   "new_today": true,
+   "recommended": true,
+   "recommend_reason": "AX 방안 아이디어 한 건이면 끝, 마감 12/10"
+  },
+  {
+   "id": "capted-coastal-safety-2026",
+   "title": "해양경찰청 2026 CAPTED 연안안전 아이디어 공모전",
+   "url": "https://linkareer.com/activity/365109",
+   "host": "해양경찰청",
+   "category": "지자체·기관 공모",
+   "deadline": "2026-12-13",
+   "prize": "상장 4점, 총 120만원 상당 부상품",
+   "eligibility": "일반 국민 누구나, 개인 또는 3인 이하 팀",
+   "region_limit": "없음",
+   "grade": "S",
+   "reason": "혼자 아이디어 제출 가능, 해양 쪽 관심과 맞음",
+   "source": "링커리어",
+   "first_seen": "2026-11-26",
+   "new_today": true,
+   "recommended": true,
+   "recommend_reason": "해양 관심과 맞고 혼자 아이디어 제출, 마감 12/13"
+  },
+  {
+   "id": "forwardthon-2026",
+   "title": "ForwardThon 2026 (FDE 해커톤)",
+   "url": "https://forwardthon.com/",
+   "host": "위시켓·AIDP",
+   "category": "IT·해커톤",
+   "deadline": "2026-11-30",
+   "prize": "상금 확정 후 안내, 기업 키맨 심사",
+   "eligibility": "대학생·직장인·일반인 누구나(100명 선발)",
+   "region_limit": "없음",
+   "grade": "A",
+   "reason": "신청 마감 4일, 12/12 오프라인 하루 PT",
+   "source": "공식 사이트",
+   "first_seen": "2026-11-26",
+   "new_today": true,
+   "recommended": true,
+   "recommend_reason": "AX·FDE 제안 PT라 지금 업무 경험 그대로 씀, 신청 11/30"
+  },
+  {
+   "id": "jeonse-zero-essay-2026",
+   "title": "청년 전세사기 피해예방 수기 공모전 「전세사기 ZERO 챌린지」",
+   "url": "https://linkareer.com/activity/366375",
+   "host": "",
+   "category": "글쓰기·수기",
+   "deadline": "2026-12-31",
+   "prize": "총 1,200만원",
+   "eligibility": "만 19~34세 청년(피해 경험 무관)",
+   "region_limit": "없음",
+   "grade": "A",
+   "reason": "마감 넉넉하고 상금 큼, 단 만 34세 이하만",
+   "source": "링커리어",
+   "first_seen": "2026-11-26",
+   "new_today": true
+  },
+  {
+   "id": "tongil-song-2026",
+   "title": "2026 통일공감 창작노래 공모전",
+   "url": "https://edu.donga.com/news/articleView.html?idxno=113998",
+   "host": "한국융합예술심리학회",
+   "category": "음악",
+   "deadline": "2026-12-15",
+   "prize": "총 800만원(대상 200만원)",
+   "eligibility": "청년·일반 부문(2010년 이전 출생 비전문가)",
+   "region_limit": "없음",
+   "grade": "A",
+   "reason": "비전문가 부문 있음, 곡 만드는 부담 큼",
+   "source": "동아 기사",
+   "first_seen": "2026-11-26",
+   "new_today": true
+  },
+  {
+   "id": "ugps-shortform-2026",
+   "title": "아이디씨티 uGPS™ 숏폼 영상 공모전",
+   "url": "https://linkareer.com/activity/363255",
+   "host": "아이디씨티",
+   "category": "디자인·영상",
+   "deadline": "2026-12-04",
+   "prize": "총 300만원(1등 150만원)",
+   "eligibility": "일반인 누구나",
+   "region_limit": "없음",
+   "grade": "A",
+   "reason": "30초~1분 숏폼, 마감 8일",
+   "source": "링커리어",
+   "first_seen": "2026-11-26",
+   "new_today": true
+  },
+  {
+   "id": "cmbc-ai-video-2026",
+   "title": "춘천MBC AI영상 공모전",
+   "url": "https://www.aigongmomoa.com/p/linkareer-360286.html",
+   "host": "춘천MBC",
+   "category": "디자인·영상",
+   "deadline": "2026-12-10",
+   "prize": "대상 200만원 등 총 490만원",
+   "eligibility": "일반인",
+   "region_limit": "없음(강원 소재 주제)",
+   "grade": "B",
+   "reason": "강원 관광·지역 주제 AI 영상",
+   "source": "AI공모모아",
+   "first_seen": "2026-11-26",
+   "new_today": true
+  },
+  {
+   "id": "missing-child-shortform-2026",
+   "title": "제1회 장기실종아동찾기 숏폼 영상 공모전",
+   "url": "https://www.aigongmomoa.com/p/linkareer-362124.html",
+   "host": "실종아동찾기협회",
+   "category": "디자인·영상",
+   "deadline": "2026-12-15",
+   "prize": "총 120만원(5팀)",
+   "eligibility": "일반 국민, 4인 이하 팀",
+   "region_limit": "없음",
+   "grade": "B",
+   "reason": "40~90초 세로 숏폼, 상금 작음",
+   "source": "AI공모모아",
+   "first_seen": "2026-11-26",
+   "new_today": true
+  },
+  {
+   "id": "jejueo-ai-music-2026",
+   "title": "제1회 제주어 AI 음악 경진대회",
+   "url": "https://aimusicstudio.store/contest.html",
+   "host": "AI Sound Lab",
+   "category": "음악",
+   "deadline": "2026-12-20",
+   "prize": "총상금 600만원",
+   "eligibility": "제한 명시 없음(AI 보컬 곡 3~5분)",
+   "region_limit": "없음",
+   "grade": "B",
+   "reason": "AI 생성 음원 하나로 접수, 주최 정보는 적음",
+   "source": "공식 사이트",
+   "first_seen": "2026-11-26",
+   "new_today": true
+  },
+  {
+   "id": "polarbear-marathon-2027",
+   "title": "2027 북극곰 마라톤(서울, 1/23)",
+   "url": "https://runfinder.kr/race_view.php?id=23516",
+   "host": "",
+   "category": "운동",
+   "deadline": "2027-01-17",
+   "prize": "참가형",
+   "eligibility": "누구나",
+   "region_limit": "서울 개최",
+   "grade": "B",
+   "reason": "겨울 러닝 대회, 접수 1/17까지",
+   "source": "런파인더",
+   "first_seen": "2026-11-26",
    "new_today": true
   }
  ],
  "top5": [
   {
-   "id": "sjcu-ai-bulssi-2026",
-   "why": "트랙2는 만든 AI 웹앱·자동화를 3분 영상으로 소개, 대상 200만원"
+   "id": "forwardthon-2026",
+   "why": "AX·FDE 제안 PT라 지금 업무 경험 그대로 씀, 신청 11/30"
   },
   {
-   "id": "relate-neo4j-2026",
-   "why": "기존 사이드 프로젝트에 그래프 DB 붙여 내도 됨, 혼자 온라인"
+   "id": "kalis-ai-idea-2026",
+   "why": "AX 방안 아이디어 한 건이면 끝, 마감 12/10"
   },
   {
-   "id": "cloud9-jetbrains-2026",
-   "why": "IntelliJ·Java로 e스포츠 데이터 툴, 마감 1월 중순"
+   "id": "capted-coastal-safety-2026",
+   "why": "해양 관심과 맞고 혼자 아이디어 제출, 마감 12/13"
   },
   {
    "id": "cognizant-open-agentic-web",
    "why": "에이전트 웹 백엔드 성격이라 Spring 포트폴리오로 딱"
   },
   {
-   "id": "smartcity-ai",
-   "why": "아이디어만 내면 되고 마감 12/14"
+   "id": "sjcu-ai-bulssi-2026",
+   "why": "만든 AI 웹앱·자동화를 3분 영상으로 소개, 마감 12/20"
   }
  ]
 }
